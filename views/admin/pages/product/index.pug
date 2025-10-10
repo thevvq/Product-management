@@ -4,10 +4,18 @@ block main
     h1 Trang danh sách sản phẩm
 
     .card.mb-3
-        .card-header Bộ lọc và Tìm kiếm 
+        .card-header Bộ lọc và Tìm kiếm
         .card-body
-            for item in filterStatus
-                button.btn.btn-sm.btn-outline-success.ms-1(class=`${item.class}` btn-status=`${item.status}`) #{item.name}
+            .row
+                .col-md-6.mb-2
+                    for item in filterStatus
+                        button.btn.btn-sm.btn-outline-success.ms-1(class=item.class btn-status=item.status)= item.name
+
+                .col-md-6
+                    form#form-search
+                        .input-group
+                            input.form-control(type='text', placeholder='Nhập từ khóa', name='keyword' value = keyword)
+                            button.btn.btn-success(type='submit') Tìm kiếm
 
     .card.mb-3
         .card-header Danh sách sản phẩm
