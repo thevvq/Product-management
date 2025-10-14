@@ -25,7 +25,7 @@ module.exports.index = async (req, res) => {
     const countProducts = await Product.countDocuments(find)
     const objectPagination = paginationHelper({
         currentPage: 1,
-        limitItems: 4
+        limitItems: 8
     }, req.query, countProducts)
     
     // End Pagination
@@ -39,4 +39,15 @@ module.exports.index = async (req, res) => {
         keyword: searchObject.keyword,
         pagination: objectPagination
     })
+}
+
+// [PATCH] /admin/products/change-status/:status/:id
+module.exports.changeStatus = async (req, res) =>{
+    const id = req.params.id
+    const status = req.params.status
+
+    await Product.updateOne({_id: id}, {status: status})
+    
+    res.redirect(req.get('Referer') || `${req.app.locals.prefixAdmin}/products`);
+
 }
