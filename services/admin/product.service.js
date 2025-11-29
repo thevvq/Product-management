@@ -43,12 +43,22 @@ module.exports.changeStatus = async (id, status) => {
 module.exports.changeMultiStatus = async (type, ids) => {
     const statusMap = {
         active: 'active',
-        inactive: 'inactive'
+        inactive: 'inactive',
+        'delete-all': 'delete-all'
     }
 
     const status = statusMap[type]
     if (!status) return
 
+    if (status === 'delete-all') {
+        return await Product.updateMany(
+            { _id: { $in: ids }},
+            { 
+                deleted: true,
+                deletedAt: new Date()
+            }  
+        )
+    }
     await Product.updateMany(
         { _id: { $in: ids } },
         { status }

@@ -92,9 +92,15 @@ if (formChangeMulti){
 
         const checkBoxMulti = document.querySelector('[checkbox-multi]');
         const inputsChecked = checkBoxMulti.querySelectorAll("input[name='id']:checked");
+        
+        const typeSelect = e.target.elements.type.value;
+        if (typeSelect === 'delete-all'){
+            const confirmDelete = confirm('Bạn có chắc chắn muốn xóa các sản phẩm đã chọn không?');
+            if (!confirmDelete) return;
+        }
 
         if (inputsChecked.length === 0){
-            alert('Vui lòng chọn ít nhất một mục!');
+            alert('Vui lòng chọn ít nhất một sản phẩm!');
             return;
         }
 
