@@ -10,10 +10,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-<<<<<<< HEAD
     "bcrypt": "^6.0.0",
-=======
->>>>>>> 0fc684c1c350f2ee079f885dfe92c42e22c25220
     "body-parser": "^2.2.1",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
