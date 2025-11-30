@@ -17,11 +17,12 @@ module.exports.getList = async (query) => {
     const countProducts = await Product.countDocuments(find)
     const pagination = paginationHelper({
         currentPage: 1,
-        limitItems: 8
+        limitItems: 6
     }, query, countProducts)
 
     const products = await Product
         .find(find)
+        .sort({ position: 1 })
         .limit(pagination.limitItems)
         .skip(pagination.skip)
 
@@ -44,7 +45,8 @@ module.exports.changeMultiStatus = async (type, ids) => {
     const statusMap = {
         active: 'active',
         inactive: 'inactive',
-        'delete-all': 'delete-all'
+        'delete-all': 'delete-all',
+        'change-position': 'change-position'
     }
 
     const status = statusMap[type]
@@ -59,6 +61,19 @@ module.exports.changeMultiStatus = async (type, ids) => {
             }  
         )
     }
+
+    if (status === 'change-position') {
+        for (const item of ids) {
+            let[id, position] = item.split('-');
+            position = parseInt(position);
+            await Product.updateOne(
+                { _id: id },
+                { position }
+            )
+        }
+        return 
+    }
+
     await Product.updateMany(
         { _id: { $in: ids } },
         { status }
