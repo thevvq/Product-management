@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 const express = require('express');
 const methodOverride = require('method-override');
 require('dotenv').config();
+=======
+const express = require('express')
+const methodOverride = require('method-override')
+const bodyParser = require('body-parser')
+require('dotenv').config()
+>>>>>>> 0fc684c1c350f2ee079f885dfe92c42e22c25220
 
 const session = require("express-session");
 const bodyParser = require("body-parser");
@@ -16,8 +23,15 @@ const systemConfig = require('./config/system');
 const database = require('./config/database');
 database.connect();
 
+<<<<<<< HEAD
 const app = express();
 const port = process.env.PORT;
+=======
+app.use(bodyParser.urlencoded({ extended: false }))
+
+app.set('views', './views')
+app.set('view engine', 'pug')
+>>>>>>> 0fc684c1c350f2ee079f885dfe92c42e22c25220
 
 // Override method
 app.use(methodOverride('_method'));
