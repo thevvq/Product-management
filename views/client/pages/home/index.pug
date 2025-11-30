@@ -1,4 +1,12 @@
 extends ../../layouts/default.pug
 
 block main
-    h1 Trang chủ
+
+    .slider
+        .slides
+            img(src="/images/slider1.jpg", alt="Slide 1")
+            img(src="/images/slider2.jpg", alt="Slide 2")
+            img(src="/images/slider3.jpg", alt="Slide 3")
+        .dots
+
+    script(src="/js/slider.js")
