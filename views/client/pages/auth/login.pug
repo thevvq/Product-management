@@ -1,0 +1,27 @@
+extends ../../layouts/default
+
+block main
+    // 👉 Gắn file CSS riêng cho trang login
+    link(rel="stylesheet", href="/css/login.css")
+
+    .auth-container
+        .auth-box
+            h2.title Đăng nhập
+
+            if error
+                .alert.alert-danger #{error}
+
+            form(method="POST", action="/login")
+                .form-group
+                    label Email
+                    input(type="email", name="email", placeholder="Nhập email..." required)
+
+                .form-group
+                    label Mật khẩu
+                    input(type="password", name="password", placeholder="Nhập mật khẩu..." required)
+
+                button.btn-login(type="submit") Đăng nhập
+
+            p.switch-text
+                | Chưa có tài khoản?
+                a(href="/register") Đăng ký ngay →

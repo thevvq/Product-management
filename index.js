@@ -10,7 +10,8 @@ const bodyParser = require("body-parser");
 const routeClient = require('./routes/client/index.route');
 const routeAdmin = require('./routes/admin/index.route');
 
-const loginRoute = require("./routes/login.route");
+const loginRoute = require("./routes/auth/login.route");
+const registerRoute = require("./routes/auth/register.route");
 
 const systemConfig = require('./config/system');
 
@@ -23,9 +24,10 @@ const port = process.env.PORT;
 // Override method
 app.use(methodOverride('_method'));
 
-// Body parser để đọc form POST
+// Body parser
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
 
 // Session login
 app.use(
@@ -40,7 +42,7 @@ app.use(
 // Flash message
 app.use(flash());
 
-// Gắn user vào view
+// ⭐ GẮN USER CHO VIEW
 app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
@@ -56,14 +58,15 @@ app.use(express.static('public'));
 // Admin prefix
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
-// Login route
+// ⭐ GẮN ROUTE AUTH TRƯỚC ROUTE CLIENT/ADMIN
 app.use("/login", loginRoute);
+app.use("/register", registerRoute);
 
-// Client & Admin routes
+// ⭐ SAU ĐÓ MỚI GẮN ROUTE CLIENT/ADMIN
 routeClient(app);
 routeAdmin(app);
 
-// Server start
+// Start server
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
