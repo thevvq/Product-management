@@ -120,14 +120,14 @@ module.exports.createProduct = async (req) => {
     return await product.save();
 }
 
-module.exports.editProduct = async (id)=> {
+module.exports.edit= async (id)=> {
     return await Product.findOne({
         deleted: false,
         _id: id
     })
 }
 
-module.exports.editProductPatch = async (req, id) => {
+module.exports.editProduct = async (req, id) => {
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
@@ -143,4 +143,11 @@ module.exports.editProductPatch = async (req, id) => {
         { _id: id },
         req.body
     );
+}
+
+module.exports.detail = async (id) => {
+    return await Product.findOne({
+        deleted: false,
+        _id: id
+    })
 }
