@@ -260,3 +260,71 @@ footer.footer {
   font-size: 15px;
   color: #000000;
 }
+
+/* Nút Zalo nổi góc dưới phải */
+/* Floating Zalo button góc dưới phải */
+.zalo-chat-button {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  z-index: 9999;
+}
+
+.zalo-chat-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #0068ff; /* màu Zalo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  animation: zalo-pulse 1.5s infinite;
+}
+
+.zalo-chat-circle i {
+  font-size: 26px;
+  color: #fff;
+}
+
+/* chữ "Chat Zalo" bên cạnh */
+.zalo-chat-text {
+  background: #fff;
+  color: #0068ff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+
+/* hover */
+.zalo-chat-button:hover .zalo-chat-circle {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* animation nhịp */
+@keyframes zalo-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* mobile: đẩy lên khỏi mép dưới một chút */
+@media (max-width: 768px) {
+  .zalo-chat-button {
+    right: 16px;
+    bottom: 80px;
+  }
+}
