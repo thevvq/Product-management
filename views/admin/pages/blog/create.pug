@@ -1,0 +1,27 @@
+extends ../../layouts/default
+
+block main
+    .container.mt-4
+        h2 Thêm bài viết
+
+        form(method="POST", action="/admin/blog/create" enctype="multipart/form-data")
+            .mb-3
+                label Tiêu đề
+                input.form-control(type="text", name="title", required)
+
+            .mb-3(upload-image='')
+                label.form-label(for="thumbnail") Hình ảnh
+                input.form-control(type="file" id="thumbnail" name="thumbnail" accept="image/*" required upload-image-input='') 
+                .image-preview-wrapper
+                    img(src='' upload-image-preview='')
+                    button(
+                        type='button' 
+                        upload-image-remove='' 
+                        aria-label='Close'
+                    ) x
+            .mb-3
+                label Nội dung
+                textarea.form-control(name="content", rows="8", required)
+
+            button.btn.btn-success(type="submit") Lưu bài viết
+            a.btn.btn-secondary.ms-2(href="/admin/blog") Hủy

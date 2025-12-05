@@ -1,35 +1,98 @@
-const express = require('express')
-const methodOverride = require('method-override')
-const bodyParser = require('body-parser')
-require('dotenv').config()
+const express = require('express');
+const methodOverride = require('method-override');
+require('dotenv').config();
 
-const routeClient = require('./routes/client/index.route')
-const routeAdmin = require('./routes/admin/index.route')
+const flash = require('express-flash');
+const session = require("express-session");
+const bodyParser = require("body-parser");
 
-const systemConfig = require('./config/system')
+const routeClient = require('./routes/client/index.route');
+const routeAdmin = require('./routes/admin/index.route');
 
-const database = require('./config/database')
-database.connect()
+const loginRoute = require("./routes/auth/login.route");
+const registerRoute = require("./routes/auth/register.route");
+const cartRoute = require("./routes/client/cart.route");
 
-const app = express()
-const port = process.env.PORT
+const systemConfig = require('./config/system');
 
-app.use(methodOverride('_method'))
+const database = require('./config/database');
 
-app.use(bodyParser.urlencoded({ extended: false }))
+database.connect();
 
-app.set('views', './views')
-app.set('view engine', 'pug')
+const app = express();
+const port = process.env.PORT;
 
-app.use(express.static('public'))
 
-// App local variables
-app.locals.prefixAdmin = systemConfig.prefixAdmin
+// ---------------------- MIDDLEWARE CƠ BẢN ----------------------
 
-//Routes
-routeClient(app)
-routeAdmin(app)
+app.use(methodOverride('_method'));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// SESSION
+app.use(
+    session({
+        secret: process.env.SESSION_SECRET,
+        resave: false,
+        saveUninitialized: true,
+        cookie: { maxAge: 30 * 60 * 1000 }
+    })
+);
+
+// FLASH
+app.use(flash());
+
+
+// ---------------------- GẮN USER CHO VIEW ----------------------
+
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
+
+
+// ---------------------- GIỎ HÀNG MINI ----------------------
+
+app.use((req, res, next) => {
+    const cart = req.session.cart || {};
+    let totalQty = 0;
+
+    for (let id in cart) {
+        totalQty += cart[id].quantity;
+    }
+
+    res.locals.cartTotal = totalQty; // ⭐ DÙNG TRONG header.pug
+    next();
+});
+
+
+// ---------------------- TEMPLATE + PUBLIC ----------------------
+
+app.set('views', './views');
+app.set('view engine', 'pug');
+
+app.use(express.static('public'));
+
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+
+
+// ---------------------- ROUTES ----------------------
+
+// Auth routes
+app.use("/login", loginRoute);
+app.use("/register", registerRoute);
+
+// Cart routes (PHẢI đặt trước client route)
+app.use("/cart", cartRoute);
+
+// Client + Admin
+routeClient(app);
+routeAdmin(app);
+
+
+// ---------------------- RUN SERVER ----------------------
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+    console.log(`Server running on port ${port}`);
+});

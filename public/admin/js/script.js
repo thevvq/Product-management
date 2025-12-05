@@ -127,3 +127,99 @@ if (formChangeMulti){
 
 // End Form change multi
 
+// Show alert
+const alerts = document.querySelectorAll('[show-alert]');
+if (alerts.length > 0){
+    alerts.forEach(alert => {
+        const time = parseInt(alert.getAttribute('data-time')) || 3000;
+
+        const btnClose = alert.querySelector('[close-alert]');
+
+        setTimeout(()=>{
+            alert.classList.add('alert-hide');
+        }, time);
+
+        if (btnClose){
+            btnClose.addEventListener('click', () => {
+                alert.classList.add('alert-hide');
+            })
+        } 
+    })
+}
+
+// End Show alert
+
+// Upload image preview
+const uploadImageContainer = document.querySelector('[upload-image]');
+
+if (uploadImageContainer) {
+    const uploadImageInput = uploadImageContainer.querySelector('[upload-image-input]');
+    const uploadImagePreview = uploadImageContainer.querySelector('[upload-image-preview]');
+    const uploadImageRemove = uploadImageContainer.querySelector('[upload-image-remove]');
+    const removeFlag = uploadImageContainer.querySelector('[upload-image-remove-flag]');
+
+    const oldImage = uploadImagePreview.getAttribute('data-old');
+
+    if (oldImage) {
+        uploadImagePreview.style.display = 'block';
+        uploadImageRemove.style.display = 'block';
+    } else {
+        uploadImagePreview.style.display = 'none';
+        uploadImageRemove.style.display = 'none';
+    }
+
+    uploadImageInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+
+        if (file) {
+            uploadImagePreview.src = URL.createObjectURL(file);
+            uploadImagePreview.style.display = 'block';
+            uploadImageRemove.style.display = 'block';
+        }
+    });
+
+    uploadImageRemove.addEventListener('click', () => {
+
+        uploadImageInput.value = '';
+
+        uploadImagePreview.src = '';
+        uploadImagePreview.style.display = 'none';
+        uploadImageRemove.style.display = 'none';
+        
+        if (oldImage) {
+            removeFlag.value = "1";
+    }
+    });
+}
+// End upload image preview
+
+// Sort
+const sort = document.querySelector('[sort]')
+
+if (sort){
+    const sortSelect = sort.querySelector("[sort-select]");
+    const btnClearSort = sort.querySelector("[sort-clear]");
+
+    const url = new URL(window.location.href);
+
+    sortSelect.addEventListener("change",  (e) => {
+        const value = e.target.value;
+        url.searchParams.set("sort", value);
+        window.location.href = url.href;
+    });
+
+    btnClearSort.addEventListener("click", function () {
+        url.searchParams.delete("sort");
+        window.location.href = url.href;
+    })
+    // Add selected for option
+    const sortKey = url.searchParams.get("sort")
+    
+    if (sortKey){
+        const optionSelected = sortSelect.querySelector(`option[value='${sortKey}']`)
+        optionSelected.selected = true
+    }
+
+}
+// End Sort
+

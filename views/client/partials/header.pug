@@ -3,13 +3,50 @@ header.header
         .row.align-items-center
             .col-3
                 .inner-logo
-                    a(href='/')
-                        img(src='/images/logo.svg', alt='Logo')
+                    a(href="/")
+                        img(src="/images/logo.svg", alt="Logo")
 
             .col-9
-                .inner-menu 
+                .inner-menu
                     ul
                         li
-                            a(href='/') Trang chủ
+                            button.menu-btn(onclick="window.location.href='/'") Trang chủ
                         li
-                            a(href='/products') Sản phẩm
+                            button.menu-btn(onclick="window.location.href='/products'") Sản phẩm
+                        li
+                            button.menu-btn(onclick="window.location.href='/blog'") Tin mới
+
+                        if !user
+                            li
+                                button.menu-btn(onclick="window.location.href='/login'") Đăng nhập
+                        else
+                         
+                            li
+                                a.cart-mini(href="/cart")
+                                    i.fa-solid.fa-cart-shopping.cart-icon
+                                    span.cart-count #{cartTotal || 0}
+
+                            li
+                                .user-menu
+                                    .user-trigger#userMenuToggle
+                                        img.avatar-user(src=user.avatar || "/images/default-avatar.png")
+                                        span.username #{user.fullName}
+                                        i.fa-solid.fa-chevron-down(style="font-size:12px;")
+
+                                    ul.user-dropdown#userDropdown
+                                        li
+                                            a(href="/profile")
+                                                i.fa-regular.fa-user
+                                                span Thông tin tài khoản
+                                        li
+                                            a(href="/orders")
+                                                i.fa-solid.fa-bag-shopping
+                                                span Đơn hàng
+                                        li
+                                            a(href="/cart")
+                                                i.fa-solid.fa-cart-shopping
+                                                span Giỏ hàng
+                                        li
+                                            a(href="/login/logout")
+                                                i.fa-solid.fa-right-from-bracket
+                                                span Đăng xuất
