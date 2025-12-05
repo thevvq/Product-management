@@ -13,7 +13,7 @@ block main
                     .inner-content 
                         .inner-price-new $#{product.newPrice}
                         .inner-price-old $#{product.price}
-                        .inner-description Mô tả: #{product.description}
+                        .inner-description Mô tả: !{product.description}
                         .inner-discount % Giảm giá: -#{product.discountPercentage}
                         .inner-stock Còn lại: $#{product.stock}
     else
