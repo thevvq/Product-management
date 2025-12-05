@@ -23,8 +23,18 @@ module.exports.getList = async (query) => {
         totalProducts
     )
 
+    let sort = {};
+
+    if (query.sort) {
+        const [field, order] = query.sort.split("-")
+        sort[field] = order === "asc" ? 1 : -1
+    } else {
+        sort = { position: -1 }
+    }
+
+
     const products = await Product.find(find)
-        .sort({ position: 1 })
+        .sort(sort)
         .skip(pagination.skip)
         .limit(pagination.limitItems)
 
