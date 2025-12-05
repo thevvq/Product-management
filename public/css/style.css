@@ -1,4 +1,6 @@
-/* Header */
+/* ============================================
+   HEADER
+============================================ */
 .header {
     border-bottom: 1px solid #ddd;
     padding: 10px 0;
@@ -9,7 +11,7 @@
     max-width: 100%;
 }
 
-.header .inner-menu>ul {
+.header .inner-menu > ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -19,7 +21,7 @@
     flex-wrap: wrap;
 }
 
-.header .inner-menu>ul>li {
+.header .inner-menu > ul > li {
     margin-left: 20px;
 }
 
@@ -27,9 +29,14 @@
     text-decoration: none;
 }
 
+
 /* End header */
 
-/* Footer */
+/* box-head */
+
+/* ============================================
+   FOOTER
+============================================ */
 .footer {
     background: #333;
     color: #fff;
@@ -41,9 +48,10 @@
     margin: 0;
 }
 
-/* End footer*/
+/* ============================================
+   BOX HEAD
+============================================ */
 
-/* box-head */
 .box-head {
     margin-bottom: 30px;
 }
@@ -55,9 +63,9 @@
     color: green;
 }
 
-/* End box-head */
-
-/* product-item */
+/* ============================================
+   PRODUCT ITEM
+============================================ */
 .product-item {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -112,16 +120,15 @@
     border-radius: 8px;
 }
 
-/* end product-item */
-
-/* slider */
+/* ============================================
+   SLIDER
+============================================ */
 .slider {
     position: relative;
     width: 100%;
     height: 400px;
     overflow: hidden;
     touch-action: pan-y;
-    /* cho phép trượt ngang cảm ứng */
 }
 
 .slides {
@@ -129,14 +136,12 @@
     width: 100%;
     height: 100%;
     transition: transform 0.3s ease;
-    /* mượt khi kéo */
 }
 
 .slides img {
     width: 100%;
     flex-shrink: 0;
     user-select: none;
-    /* không chọn ảnh khi kéo */
 }
 
 .dots {
@@ -161,6 +166,9 @@
     background: rgba(255, 255, 255, 1);
 }
 
+/* ============================================
+   MENU BUTTONS
+============================================ */
 .menu-btn {
     background: #f8f9fa;
     border: 1px solid #ddd;
@@ -176,42 +184,325 @@
     border-color: #ccc;
 }
 
-.profile-btn {
-    background: #0d6efd;
-    color: #fff;
-    padding: 6px 14px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.25s;
-    font-size: 14px;
-}
-
-.profile-btn:hover {
-    background: #0b5ed7;
-}
-
 .logout-btn {
     background: #dc3545;
     color: #fff;
     padding: 6px 14px;
-    border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.25s;
-    font-size: 14px;
 }
 
 .logout-btn:hover {
     background: #bb2d3b;
 }
 
-.inner-menu ul {
+/* ============================================
+   MINI CART
+============================================ */
+.cart-mini {
+    position: relative;
+    display: inline-block;
+}
+
+.cart-icon {
+    font-size: 22px;
+    cursor: pointer;
+    color: #444;
+}
+
+.cart-count {
+    position: absolute;
+    top: -18px;         /* ➜ nâng lên thêm */
+    right: -20px;
+    background: #ff4d4f;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ============================================
+   USER MENU (Dropdown Shopee Style - CLICK)
+============================================ */
+.user-menu {
+    margin-left: 25px;
+    position: relative;
+    display: inline-block;
+}
+
+.user-trigger {
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    background: #e78964;
+    color: #fff;
+    padding: 7px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.user-trigger:hover {
+    background: #b0d96a;
+}
+
+.avatar-user {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+}
+
+.username {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Dropdown box */
+.user-dropdown {
+    position: absolute;
+    top: 48px;
+    right: 0;
+    width: 220px;
+    background: #fff;
+    padding: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+    list-style: none;
+    display: none; /* Ẩn mặc định - bật bằng JS */
+    animation: fadeDown 0.18s ease-out;
+    z-index: 999;
+}
+
+.user-dropdown.show {
+    display: block !important;
+}
+
+.user-dropdown li {
+    padding: 10px 16px;
+}
+
+.user-dropdown li:hover {
+    background: #f6f6f6;
+}
+
+.user-dropdown a {
+    display: flex;
+
     align-items: center;
     gap: 10px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.user-dropdown a i {
+    font-size: 16px;
+    color: #777;
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================
+   LOẠI BỎ CSS CŨ KHÔNG CẦN THIẾT
+============================================ */
+.profile-dropdown,
+.profile-btn,
+.dropdown-menu {
+    display: none !important;
+}
+
+
+/* Footer */
+footer.footer {
+  background: #f3f3f3;
+  padding: 40px 80px 50px;
+  font-size: 14px;
+  color: #000;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+.footer-column {
+  flex: 1;
+}
+
+.footer-logo {
+  font-size: 32px;
+  margin-bottom: 16px;
+}
+
+.footer-title {
+  font-size: 20px;
+  margin-bottom: 16px;
+}
+
+.footer-subtitle {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.footer-contact,
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-contact li {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.footer-contact i {
+  margin-top: 3px;
+}
+
+.footer-links li {
+  margin-bottom: 6px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #000000; /* link xanh như hình */
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-newsletter .footer-desc {
+  margin-bottom: 16px;
+}
+
+.footer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.footer-input {
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: none;
+  outline: none;
+  background: #fff;
+}
+
+.footer-btn {
+  padding: 12px 24px;
+  border-radius: 999px;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.footer-btn:hover {
+  opacity: 0.9;
+}
+
+.footer-social {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+}
+
+.footer-social a {
+  font-size: 20px;
+  text-decoration: none;
+  color: #000;
+}
+
+.footer-bottom {
+  margin-top: 24px;
+  padding-top: 12px;
+  text-align: center;
+  font-size: 15px;
+  color: #000000;
+}
+
+/* Nút Zalo nổi góc dưới phải */
+/* Floating Zalo button góc dưới phải */
+.zalo-chat-button {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  z-index: 9999;
+}
+
+.zalo-chat-circle {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #0068ff; /* màu Zalo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  animation: zalo-pulse 1.5s infinite;
+}
+
+.zalo-chat-circle i {
+  font-size: 26px;
+  color: #fff;
+}
+
+/* chữ "Chat Zalo" bên cạnh */
+.zalo-chat-text {
+  background: #fff;
+  color: #0068ff;
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+
+/* hover */
+.zalo-chat-button:hover .zalo-chat-circle {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+/* animation nhịp */
+@keyframes zalo-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* mobile: đẩy lên khỏi mép dưới một chút */
+@media (max-width: 768px) {
+  .zalo-chat-button {
+    right: 16px;
+    bottom: 80px;
+  }
 }
