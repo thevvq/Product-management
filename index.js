@@ -7,27 +7,32 @@ const flash = require('express-flash');
 const session = require("express-session");
 const bodyParser = require("body-parser");
 
+// ROUTES
 const routeClient = require('./routes/client/index.route');
 const routeAdmin = require('./routes/admin/index.route');
-
 const loginRoute = require("./routes/auth/login.route");
 const registerRoute = require("./routes/auth/register.route");
 const cartRoute = require("./routes/client/cart.route");
 
 const systemConfig = require('./config/system');
 
+// DB
 const database = require('./config/database');
-
 database.connect();
+
+// Cart Model
+const Cart = require("./models/cart.model");
 
 const app = express();
 const port = process.env.PORT;
 
 
-// ---------------------- MIDDLEWARE CƠ BẢN ----------------------
+
+/* ======================================================
+   MIDDLEWARE CƠ BẢN
+====================================================== */
 
 app.use(methodOverride('_method'));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -37,7 +42,7 @@ app.use(
         secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
-        cookie: { maxAge: 30 * 60 * 1000 }
+        cookie: { maxAge: 30 * 60 * 1000 } 
     })
 );
 
@@ -45,8 +50,10 @@ app.use(
 app.use(flash());
 
 
-// ---------------------- GẮN USER CHO VIEW ----------------------
 
+/* ======================================================
+   GẮN USER VÀO TEMPLATE
+====================================================== */
 app.use((req, res, next) => {
     res.locals.user = req.session.user || null;
     next();
@@ -54,45 +61,64 @@ app.use((req, res, next) => {
 
 
 
-// ---------------------- GIỎ HÀNG MINI ----------------------
+/* ======================================================
+   MINI CART DÙNG MongoDB (KHÔNG DÙNG SESSION)
+====================================================== */
+app.use(async (req, res, next) => {
 
-app.use((req, res, next) => {
-    const cart = req.session.cart || {};
-    let totalQty = 0;
-
-    for (let id in cart) {
-        totalQty += cart[id].quantity;
+    // Nếu chưa đăng nhập → giỏ hàng = 0
+    if (!req.session.user) {
+        res.locals.cartTotal = 0;
+        return next();
     }
 
-    res.locals.cartTotal = totalQty; // ⭐ DÙNG TRONG header.pug
-    next();
+    const userId = req.session.user._id;
+
+    try {
+        const cart = await Cart.findOne({ userId });
+
+        res.locals.cartTotal = cart
+            ? cart.items.reduce((sum, item) => sum + item.quantity, 0)
+            : 0;
+
+        next();
+
+    } catch (err) {
+        console.log("Mini cart error:", err);
+        res.locals.cartTotal = 0;
+        next();
+    }
 });
 
 
-// ---------------------- TEMPLATE + PUBLIC ----------------------
 
+/* ======================================================
+   TEMPLATE + PUBLIC
+====================================================== */
 
 // tinyMCE
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
-app.locals.tinyMceKey = process.env.TINYMCE_API_KEY
+app.locals.tinyMceKey = process.env.TINYMCE_API_KEY;
 
-// Pug template
-
+// PUG
 app.set('views', './views');
 app.set('view engine', 'pug');
 
+// Public folder
 app.use(express.static('public'));
 
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
 
 
-// ---------------------- ROUTES ----------------------
 
-// Auth routes
+/* ======================================================
+   ROUTES
+====================================================== */
+
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 
-// Cart routes (PHẢI đặt trước client route)
+// ⭐ CART MUST GO BEFORE CLIENT ROUTES
 app.use("/cart", cartRoute);
 
 // Client + Admin
@@ -100,7 +126,10 @@ routeClient(app);
 routeAdmin(app);
 
 
-// ---------------------- RUN SERVER ----------------------
+
+/* ======================================================
+   RUN SERVER
+====================================================== */
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
