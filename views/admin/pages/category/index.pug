@@ -1,12 +1,24 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 include ../../mixins/category-rows.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+include ../../mixins/pagination.pug
 
 block main
     +alert-success(3000)
     +alert-error(5000)
 
     h1.mb-4 #{pageTitle}
+
+    .card.mb-3
+        .card-header Bộ lọc và Tìm kiếm
+        .card-body
+            .row
+                .col-md-6.mb-2
+                    +filter-status(filterStatus)
+                .col-md-6
+                    +search(keyword)
 
     .card.mb-3
         .card-header Danh mục sản phẩm
@@ -30,4 +42,7 @@ block main
                         th Trạng thái
                         th Hành động
                 tbody
-                    +category-rows(records)
+                    - const counter = { value: pagination.skip }
+                    +category-rows(tree, '', counter)
+
+    +pagination(pagination)

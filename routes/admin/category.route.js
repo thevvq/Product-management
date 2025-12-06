@@ -11,4 +11,4 @@ router.get('/create', controller.create)
 
 router.post('/create', upload.single('thumbnail'), validate.createPost, controller.createCategory)
 
-module.exports = router
+module.exports = router  

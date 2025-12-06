@@ -4,16 +4,16 @@ const sysConfig = require('../../config/system')
 // [GET] /admin/categories
 module.exports.index = async (req, res) => {
     try {
-        const records = await categoryService.getList(req)
+        const records = await categoryService.getList(req.query)
 
         res.render('admin/pages/category/index', {
             pageTitle: 'Trang doanh mục sản phẩm',
-            records
+            ...records
         })
 
     } catch (err) {
         req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!')
-        res.redirect(`${sysConfig.prefixAdmin}/categories`)
+        res.redirect(`${sysConfig.prefixAdmin}/dashboard`)
     }
 }
 

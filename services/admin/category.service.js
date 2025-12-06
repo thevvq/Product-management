@@ -1,16 +1,50 @@
 const Category = require('../../models/category.model')
 const uploadToCloud = require("../../helper/uploadCloud")
 const createTreeHelper = require('../../helper/createTree')
+const filterStatusHelper = require('../../helper/filterStatus')
+const searchHelper = require('../../helper/search')
+const paginationHelper = require('../../helper/pagination')
 
-module.exports.getList = async (req) => {
+module.exports.getList = async (query) => {
+
+    const filterStatus = filterStatusHelper(query)
+
     const find = { deleted: false }
-    
-    const records = await Category.find(find)
 
-    const tree = createTreeHelper.createTree(records)
+    if (query.status) find.status = query.status
 
-    return tree
+    const searchObject = searchHelper(query)
+    if (searchObject.regex) find.title = searchObject.regex
+
+    const allCategories = await Category.find(find).sort({ position: 1 })
+
+    const fullTree = createTreeHelper.createTree(allCategories);
+
+    const totalRoot = fullTree.length;
+
+    const pagination = paginationHelper(
+        {
+            currentPage: 1,
+            limitItems: 6
+        },
+        query,
+        totalRoot
+    );
+
+    const paginatedRoot = fullTree.slice(
+        pagination.skip,
+        pagination.skip + pagination.limitItems
+    );
+
+    return {
+        categories: allCategories,
+        filterStatus,
+        keyword: searchObject.keyword,
+        pagination,
+        tree: paginatedRoot  
+    }
 }
+
 
 module.exports.create = async (req) => {
     const find = { deleted: false }

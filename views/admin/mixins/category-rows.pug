@@ -1,10 +1,12 @@
-mixin category-rows(records, prefix = "")
+mixin category-rows(records, prefix = "", counter)
     each item, index in records
+        - counter.value++;
+
         tr
             td
                 input(type="checkbox" name="id" value=item.id)
 
-            td #{index + 1}
+            td #{counter.value}
 
             td
                 img.img-fluid(
@@ -51,5 +53,5 @@ mixin category-rows(records, prefix = "")
                     data-btn-delete=''
                 ) Xóa
 
-        if item.children
-            +category-rows(item.children, prefix + "-- ")
+        if item.children && item.children.length
+            +category-rows(item.children, prefix + "-- ", counter)
