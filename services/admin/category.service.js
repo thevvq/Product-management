@@ -74,3 +74,40 @@ module.exports.createCategory = async (req) => {
     const records = new Category(body)
     return records.save()
 }
+
+module.exports.edit = async (id) => {
+    const data = await Category.findOne({
+        _id: id,
+        deleted: false
+    })
+
+    const records = await Category.find({deleted: false})
+    
+    const tree = createTreeHelper.createTree(records)
+     
+     return {
+        data,
+        tree
+     }
+
+}
+
+module.exports.editCategory = async (req) => {
+    const id = req.params.id
+
+    req.body.position = parseInt(req.body.position)
+
+    if (req.body.removeThumbnail === "1") {
+        req.body.thumbnail = ""
+    }
+
+    if (req.file) {
+        const uploadResult = await uploadToCloud(req.file.path)
+        req.body.thumbnail = uploadResult.secure_url
+    }
+
+    await Category.updateOne({
+        _id: id
+    }, req.body)
+
+}

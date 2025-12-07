@@ -7,7 +7,7 @@ module.exports.index = async (req, res) => {
         const records = await categoryService.getList(req.query)
 
         res.render('admin/pages/category/index', {
-            pageTitle: 'Trang doanh mục sản phẩm',
+            pageTitle: 'Trang danh mục sản phẩm',
             ...records
         })
 
@@ -39,6 +39,37 @@ module.exports.createCategory = async (req, res) => {
         await categoryService.createCategory(req)
 
         req.flash('success', 'Thêm doanh mục thành công!')
+        res.redirect(`${sysConfig.prefixAdmin}/categories`)
+
+    } catch (err) {
+        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!')
+        res.redirect(`${sysConfig.prefixAdmin}/categories`)
+    }
+}
+
+// [GET] /admin/categories/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const data = await categoryService.edit(req.params.id)
+
+        res.render('admin/pages/category/edit', {
+            pageTitle: 'Chỉnh sửa danh mục sản phẩm',
+            ...data
+        })
+
+    } catch (err) {
+        console.log(err)
+        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!')
+        res.redirect(`${sysConfig.prefixAdmin}/categories`)
+    }
+}
+
+// [PATCH] /admin/categories/edit/:id
+module.exports.editCategory = async (req, res) => {
+    try {
+        await categoryService.editCategory(req)
+
+        req.flash('success', 'Cập nhật doanh mục thành công!')
         res.redirect(`${sysConfig.prefixAdmin}/categories`)
 
     } catch (err) {
