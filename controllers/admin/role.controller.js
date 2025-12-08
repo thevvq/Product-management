@@ -73,3 +73,16 @@ module.exports.editRole = async (req, res) => {
         res.redirect(`${sysConfig.prefixAdmin}/roles`)
     }
 }
+
+// [DELETE] /admin/roles/delete-role/:id
+module.exports.deleteRole = async (req, res) => {
+    try {
+        await roleService.deleteRole(req.params.id)
+
+        req.flash('success', 'Xóa nhóm quyền thành công!')
+    } catch (err) {
+        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!')
+    }
+
+    res.redirect(req.get('Referer') || `${sysConfig.prefixAdmin}/roles`)
+}

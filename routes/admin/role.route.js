@@ -13,4 +13,6 @@ router.get('/edit/:id', controller.edit)
 
 router.patch('/edit/:id', controller.editRole)
 
+router.delete('/delete-role/:id', controller.deleteRole)
+
 module.exports = router  

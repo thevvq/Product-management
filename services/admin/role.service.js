@@ -24,3 +24,14 @@ module.exports.edit = async (id) => {
 module.exports.editRole = async (id) => {
     await Role.updateOne({_id: id}, req.body)
 }
+
+module.exports.deleteRole = async (id) => {
+    return Role.updateOne(
+        { _id: id },
+        {
+            deleted: true,
+            deletedAt: new Date()
+        }
+    )
+
+}
