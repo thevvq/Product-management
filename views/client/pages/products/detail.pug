@@ -1,20 +1,55 @@
 extends ../../layouts/default.pug
 
+block css
+    link(rel="stylesheet", href="/css/product.detail.css")
+
 block main 
     if product
-        h1.mb-4 #{product.title}
+        .container.product-detail.my-4
+            .row
+                // -------- CỘT TRÁI: ẢNH SẢN PHẨM --------
+                .col-md-6.mb-3
+                    .product-detail-gallery
+                        .product-detail-main
+                            img(src=product.thumbnail, alt=product.title)
 
-            .col-4.mb-3 
-                .product-item 
-                    .inner-image 
-                        img(src=product.thumbnail
-                            alt=product.title)
+                // -------- CỘT PHẢI: THÔNG TIN --------
+                .col-md-6.mb-3
+                    h1.product-detail-title #{product.title}
 
-                    .inner-content 
-                        .inner-price-new $#{product.newPrice}
-                        .inner-price-old $#{product.price}
-                        .inner-description Mô tả: !{product.description}
-                        .inner-discount % Giảm giá: -#{product.discountPercentage}
-                        .inner-stock Còn lại: #{product.stock}
+                    .product-detail-price
+                        if product.newPrice
+                            span.price-new #{Number(product.newPrice).toLocaleString('vi-VN')}đ
+                        if product.price
+                            span.price-old #{Number(product.price).toLocaleString('vi-VN')}đ
+                        if product.discountPercentage
+                            span.price-discount -#{product.discountPercentage}%
+
+                    if product.stock != null
+                        p.product-detail-stock Còn lại: #{product.stock}
+
+                    if product.description
+                        .product-detail-desc !{product.description}
+                    else
+                        .product-detail-desc Mô tả đang được cập nhật.
+
+                    // ------ ACTIONS ------
+                    .product-detail-actions
+                        // Hàng trên: số lượng + thêm giỏ hàng (cùng hàng)
+                        .product-detail-row
+                            .product-detail-qty
+                                input.qty-input(type="number", value="1", min="1")
+
+                            button.btn-add-cart(
+                                data-id=product._id
+                                data-title=product.title
+                                data-price=product.newPrice
+                                data-image=product.thumbnail
+                                data-stock=product.stock
+                            ) Thêm vào giỏ hàng
+
+                        // Hàng dưới: nút mua ngay, full chiều ngang
+                        a.btn-buy-now(href="/cart") Mua ngay
     else
-        h1.mb-4 Sản phẩm không tồn tại
+        .container.my-4
+            h1.mb-4 Sản phẩm không tồn tại
