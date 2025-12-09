@@ -5,7 +5,17 @@ const bcrypt = require("bcrypt");
 
 module.exports.getList = async () => { 
     let find = {deleted: false} 
-    return Account.find(find).select('-token -password') 
+
+    const accounts = await Account.find(find).select('-token -password')
+
+    for(const account of accounts){
+        const role = await Role.findOne({
+            _id: account.role_id,
+            deleted: false
+        })
+        account.role = role
+    }
+    return accounts
 }
 
 module.exports.create = async () => { 
