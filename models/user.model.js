@@ -25,10 +25,9 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: () => crypto.randomBytes(32).toString("hex")
         },
-        role: {
+        role_id: {
             type: String,
-            enum: ["client", "admin"],
-            default: "client"
+            default: ''
         },
         status: String,
         avatar: {

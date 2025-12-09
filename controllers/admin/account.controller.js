@@ -16,3 +16,40 @@ module.exports.index = async (req, res) => {
         res.redirect(`${sysConfig.prefixAdmin}/dashboard`)
     }
 }
+
+// [GET] /admin/create
+module.exports.create = async (req, res) => {
+    try {
+        const roles = await accountService.create()
+
+        res.render('admin/pages/account/create', {
+            pageTitle: 'Thêm mới tài khoản',
+            roles
+        })
+
+    } catch (err) {
+        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!')
+        res.redirect(`${sysConfig.prefixAdmin}/accounts`)
+    }
+}
+
+// [POST] /admin/create
+module.exports.createAccount = async (req, res) => {
+    try {
+        await accountService.createAccount(req);
+
+        req.flash('success', 'Tạo tài khoản thành công!');
+        return res.redirect(`${sysConfig.prefixAdmin}/accounts`);
+        
+    } catch (err) {
+        console.log("Lỗi tạo tài khoản:", err);
+
+        if (err.message === "EMAIL_EXISTS") {
+            req.flash('error', 'Email đã tồn tại, vui lòng chọn email khác!');
+            return res.redirect('back');
+        }
+
+        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!');
+        return res.redirect('back');
+    }
+}
