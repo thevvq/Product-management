@@ -257,19 +257,23 @@
     margin-bottom: 25px;
 }
 
-/* NỘI DUNG BÀI VIẾT */
+
 .blog-detail-content {
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.75;
-    color: #2d2d2d;
-    font-family: "Inter", sans-serif;
-    font-weight: 400;
-    letter-spacing: 0.1px;
+    color: #333;
+    margin-bottom: 30px;
+
+    /* FIX LỖI TRÀN CHỮ */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
-/* NỘI DUNG — Đoạn văn cách nhau hợp lý */
+
 .blog-detail-content p {
-    margin-bottom: 18px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 /* Nếu có h2 trong nội dung */
