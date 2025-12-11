@@ -10,9 +10,10 @@ block main
             .col-12
                 +box-head('Danh sách sản phẩm')
 
-        .row
+        // DANH SÁCH SẢN PHẨM
+        .product-list
             each item in products
-                .col-4.mb-3
+                .product-list-item
                     .product-item
                         a(href=`/detail/${item.slug}`)
                             .inner-image
