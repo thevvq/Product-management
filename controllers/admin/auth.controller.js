@@ -4,14 +4,17 @@ const sysConfig = require('../../config/system')
 // [GET] /admin/auth/login
 module.exports.login = async (req, res) => {
     try {
-
-        res.render('admin/pages/auth/login', {
-            pageTitle: 'Đăng nhập',
-        })
+        if (req.cookies.token) {
+            res.redirect(`${sysConfig.prefixAdmin}/dashboard`);
+        }else{
+            res.render('admin/pages/auth/login', {
+                pageTitle: 'Đăng nhập',
+            });
+        }
 
     } catch (err) {
-        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!')
-        res.redirect(`${sysConfig.prefixAdmin}/auth/login`)
+        req.flash('error', 'Có lỗi xảy ra, vui lòng thử lại!');
+        return res.redirect(`${sysConfig.prefixAdmin}/auth/login`);
     }
 }
 

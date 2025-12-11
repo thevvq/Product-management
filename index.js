@@ -6,6 +6,7 @@ const path = require('path');
 const flash = require('express-flash');
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 // ROUTES
 const routeClient = require('./routes/client/index.route');
@@ -23,7 +24,8 @@ const Cart = require("./models/cart.model");
 const app = express();
 const port = process.env.PORT;
 
-
+//cookies
+app.use(cookieParser());
 
 /* ======================================================
    MIDDLEWARE CƠ BẢN
