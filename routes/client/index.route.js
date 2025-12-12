@@ -2,7 +2,6 @@ const homeRoutes = require("./home.route");
 const productRoutes = require("./product.route");
 const blogRoutes = require("./blog.route");
 const profileRoutes = require("./profile.route");
-const cartRoutes = require("./cart.route");
 const loginRoute = require("./login.route");
 const registerRoute = require("./register.route");
 const cartRoute = require("./cart.route");
@@ -28,8 +27,6 @@ module.exports = (app) => {
     });
 
     app.use("/profile", middlewareCheckLogin.requireAuthClient, profileRoutes);
-
-    app.use("/cart", middlewareCheckLogin.requireAuthClient, cartRoutes);
 
     app.use("/blog", blogRoutes);
 

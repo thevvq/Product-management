@@ -1,27 +1,38 @@
-const Account = require('../../models/user-client')
+const Account = require('../../models/user-client');
 const bcrypt = require("bcrypt");
 
-module.exports.login= async (req, res) => {
-    const { email, password } = req.body
+module.exports.login = async (req, res) => {
+    const { email, password } = req.body;
 
     const user = await Account.findOne({
-        email: email,
+        email,
         deleted: false
-    })
+    });
 
     if (!user) {
-        throw new Error("EMAIL_NOT_FOUND")
+        throw new Error("EMAIL_NOT_FOUND");
     }
 
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-        throw new Error("PASSWORD_ERROR")
+        throw new Error("PASSWORD_ERROR");
     }
 
-    res.cookie('tokenClient', user.token)
-    return
+    // cookie
+    res.cookie("tokenClient", user.token, {
+        httpOnly: true,
+        sameSite: "lax"
+    });
+    
+    req.session.user = {
+        _id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        avatar: user.avatar
+    };
 };
 
-module.exports.logout = ( res) => {
-    res.clearCookie('tokenClient');
+module.exports.logout = (req, res) => {
+    res.clearCookie("tokenClient");
+    req.session.destroy(() => {});
 };

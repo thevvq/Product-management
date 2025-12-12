@@ -13,7 +13,6 @@ module.exports = {
             res.redirect("/");
             
         } catch (err) {
-            console.log(err)
             switch (err.message) {
                 case "EMAIL_NOT_FOUND":
                     return res.render("client/pages/auth/login", {
@@ -37,7 +36,7 @@ module.exports = {
     },
 
     logout: (req, res) => {
-        loginService.logout(res)
+        loginService.logout(req, res)
 
         res.redirect("/login");
     }
