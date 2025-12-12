@@ -131,52 +131,55 @@
 }
 
 /* ==== DANH SÁCH SẢN PHẨM (/products) ==== */
+/* Dùng flex để hàng cuối căn giữa, thay cho grid cũ */
 
-/* GRID 5 CỘT CHO TRANG /products */
 .product-list {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr)); /* 5 sản phẩm / dòng */
-    gap: 18px 16px; /* khoảng cách giữa các card */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;      /* ⭐ Hàng cuối sẽ luôn ra giữa */
+    gap: 18px 16px;
 }
 
-/* Mỗi ô chứa 1 product-item */
+/* Mỗi ô chứa 1 product-item, chiếm 1/5 hàng ở desktop */
 .product-list-item {
-    height: 100%;
+    flex: 0 1 calc(20% - 16px);  /* khoảng 5 cột */
+    display: flex;
 }
 
-/* Responsive: giảm số cột khi thu nhỏ màn hình */
+/* Responsive: chỉnh lại số cột bằng cách đổi flex-basis */
 @media (max-width: 1200px) {
-    .product-list {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+    .product-list-item {
+        flex: 0 1 calc(25% - 16px);   /* 4 cột */
     }
 }
 
 @media (max-width: 992px) {
-    .product-list {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+    .product-list-item {
+        flex: 0 1 calc(33.333% - 16px);   /* 3 cột */
     }
 }
 
 @media (max-width: 768px) {
-    .product-list {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    .product-list-item {
+        flex: 0 1 calc(50% - 16px);   /* 2 cột */
     }
 }
 
 @media (max-width: 480px) {
-    .product-list {
-        grid-template-columns: repeat(1, minmax(0, 1fr));
+    .product-list-item {
+        flex: 0 1 100%;               /* 1 cột */
     }
 }
 
 /* ==== VIEW LIST (khi bấm nút list) ==== */
 
 .product-list.list-view {
-    display: block;
+    display: block;   /* bỏ flex, để từng item xuống dòng */
 }
 
 .product-list.list-view .product-list-item {
     display: block;
+    width: 100%;
     margin-bottom: 14px;
 }
 
