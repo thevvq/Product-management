@@ -1,7 +1,6 @@
 extends ../../layouts/default
 
 block css
-<<<<<<< HEAD
   link(rel="stylesheet", href="/css/blog.css")
 
 block main
@@ -29,26 +28,4 @@ block main
     else
       h3 Bài viết không tồn tại
       a.back-btn(href="/blog") Quay lại Blog
-=======
-    link(rel="stylesheet", href="/css/blog.css")
 
-block main
-    .container.blog-detail-container
-        if blog
-            h1.blog-detail-title #{blog.title}
-
-            .blog-detail-meta
-                span
-                    i.fa-solid.fa-calendar-days
-                    | #{blog.createdAt.toLocaleDateString('vi-VN')}
-
-            img.blog-detail-thumbnail(src=blog.thumbnail alt=blog.title)
-
-            .blog-detail-content !{blog.content}
-
-            a.back-btn(href="/blog")  Quay lại Blog
-
-        else
-            h3 Bài viết không tồn tại!
-            a.back-btn(href="/blog")  Quay lại Blog
->>>>>>> origin/home
