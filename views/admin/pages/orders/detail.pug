@@ -41,17 +41,20 @@ block main
                         th Thành tiền
                 tbody
                     each item in order.items
+                        - const priceVND = Number(item.price) || 0;
+                        - const lineTotalVND = (Number(item.quantity) || 0) * priceVND;
                         tr
                             td
                                 img(src=item.thumbnail, width="60", style="border-radius:6px;")
                             td #{item.title}
                             td #{item.quantity}
-                            td $#{item.price}
-                            td $#{(item.quantity * item.price).toFixed(2)}
+                            td #{priceVND.toLocaleString('vi-VN')} VND
+                            td #{lineTotalVND.toLocaleString('vi-VN')} VND
 
             h3.mt-3
                 | Tổng thanh toán:
-                span.text-danger &nbsp;$#{order.total.toFixed(2)}
+                - const totalVND = Number(order.total) || 0;
+                span.text-danger &nbsp;#{totalVND.toLocaleString('vi-VN')} VND
 
             hr
 

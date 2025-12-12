@@ -66,7 +66,9 @@ block main
                                         style="max-width: 100px;"
                                     )
                                 td #{item.title}
-                                td $#{item.price}
+                                td
+                                    - const priceVND = Number(item.price) || 0;
+                                    | #{priceVND.toLocaleString('vi-VN')} VND
                                 td
                                     input(
                                         type="number"

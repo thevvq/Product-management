@@ -16,7 +16,9 @@ block main
                                 alt=product.title
                             )
                         .col-md-8
-                            h3 $#{product.price}
+                            h3
+                                - const priceVND = Number(product.price) || 0;
+                                | #{priceVND.toLocaleString('vi-VN')} VND
                             p Giảm giá: #{product.discountPercentage}%
                             p Còn lại: #{product.stock}
                             p Trạng thái: 
