@@ -28,7 +28,7 @@ const userClientSchema = new mongoose.Schema(
         status: String,
         avatar: {
             type: String,
-            default: null
+            default: '/images/avatar-default.svg'
         },
         phone: {
             type: String,

@@ -14,4 +14,4 @@ module.exports.register = async ({ fullName, email, password }) => {
         email,
         password: hashedPassword
     });
-};
+}

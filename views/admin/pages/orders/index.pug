@@ -5,6 +5,7 @@ block main
         .container
             h1 Quản lý đơn hàng
 
+<<<<<<< HEAD
             form#filterForm(method="GET", action="/admin/orders", class="row g-3 mb-4")
 
                 .col-md-3
@@ -16,6 +17,68 @@ block main
                         value=query.keyword || "",
                         oninput="document.getElementById('filterForm').submit()"
                     )
+=======
+        form#filterForm(method="GET", action="/admin/orders", class="row g-3 mb-4")
+
+            .col-md-3
+                label.form-label Tìm mã đơn
+                input.form-control(
+                    type="text",
+                    name="keyword",
+                    placeholder="Nhập mã đơn...",
+                    value=query.keyword || "",
+                    oninput="document.getElementById('filterForm').submit()"
+                )
+
+            .col-md-2
+                label.form-label Năm
+                select.form-select(name="year", onchange="document.getElementById('filterForm').submit()")
+                    option(value="") Tất cả
+                    each y in years
+                        option(value=y selected=(query.year == y)) #{y}
+
+            .col-md-2
+                label.form-label Tháng
+                select.form-select(name="month", onchange="document.getElementById('filterForm').submit()")
+                    option(value="") Tất cả
+                    each m in [1,2,3,4,5,6,7,8,9,10,11,12]
+                        option(value=m selected=(query.month == m)) Tháng #{m}
+
+            .col-md-2
+                label.form-label Trạng thái
+                select.form-select(name="status", onchange="document.getElementById('filterForm').submit()")
+                    option(value="") Tất cả
+                    option(value="pending" selected=(query.status=='pending')) Đang xử lý
+                    option(value="confirmed" selected=(query.status=='confirmed')) Đã duyệt
+                    option(value="shipping" selected=(query.status=='shipping')) Đang giao
+                    option(value="completed" selected=(query.status=='completed')) Hoàn tất
+                    option(value="cancelled" selected=(query.status=='cancelled')) Đã hủy
+
+            .col-md-2
+                label.form-label Sắp xếp
+                select.form-select(name="sort", onchange="document.getElementById('filterForm').submit()")
+                    option(value="newest" selected=(query.sort=='newest')) Mới nhất
+                    option(value="oldest" selected=(query.sort=='oldest')) Cũ nhất
+
+            .col-md-1.d-flex.align-items-end
+                a.btn.btn-danger.w-100(href="/admin/orders") Xóa lọc
+
+        if error
+            p.text-danger #{error}
+
+        if !orders || orders.length === 0
+            p.text-danger.mt-3 Chưa có đơn hàng nào.
+        else
+            table.table.table-bordered.mt-3
+                thead
+                    tr
+                        th Mã đơn
+                        th Người nhận
+                        th Tổng tiền
+                        th Trạng thái
+                        th Ngày tạo
+                        th Hành động
+>>>>>>> origin/home
 
                 .col-md-2
                     label.form-label Năm
@@ -66,10 +129,18 @@ block main
                             th Ngày tạo
                             th Hành động
 
+<<<<<<< HEAD
                     tbody
                         each order in orders
                             tr
                                 td #{order._id}
+=======
+                            td
+                                if order.shippingInfo && order.shippingInfo.name
+                                    | #{order.shippingInfo.name}
+                                else
+                                    | ---
+>>>>>>> origin/home
 
                                 td
                                     if order.shippingInfo && order.shippingInfo.name
@@ -77,6 +148,7 @@ block main
                                     else
                                         | ---
 
+<<<<<<< HEAD
                                 td $#{order.total.toFixed(2)}
 
                                 td
@@ -114,3 +186,38 @@ block main
                             ) Sau
     else
         +alert-no-permission()
+=======
+                            td
+                                span.badge(
+                                    class= order.status === 'cancelled' ? 'bg-secondary' :
+                                           order.status === 'completed' ? 'bg-success' :
+                                           order.status === 'shipping' ? 'bg-info' :
+                                           order.status === 'confirmed' ? 'bg-primary' : 
+                                           'bg-warning text-dark'
+                                ) #{order.statusText}
+
+                            td 
+                                | #{order.createdAt.toLocaleDateString('vi-VN')} #{order.createdAt.toLocaleTimeString('vi-VN')}
+
+                            td
+                                a.btn.btn-primary.btn-sm(href=`/admin/orders/${order._id}`) Xem chi tiết
+
+        if totalPages > 1
+            nav.mt-4
+                ul.pagination
+                    li.page-item(class=(page <= 1 ? "disabled" : ""))
+                        a.page-link(
+                            href=`?page=${page-1}&keyword=${query.keyword || ""}&year=${query.year || ""}&month=${query.month || ""}&sort=${query.sort || ""}&status=${query.status || ""}`
+                        ) Trước
+
+                    each num in [...Array(totalPages).keys()].map(n => n + 1)
+                        li.page-item(class=(page == num ? "active" : ""))
+                            a.page-link(
+                                href=`?page=${num}&keyword=${query.keyword || ""}&year=${query.year || ""}&month=${query.month || ""}&sort=${query.sort || ""}&status=${query.status || ""}`
+                            ) #{num}
+
+                    li.page-item(class=(page >= totalPages ? "disabled" : ""))
+                        a.page-link(
+                            href=`?page=${page+1}&keyword=${query.keyword || ""}&year=${query.year || ""}&month=${query.month || ""}&sort=${query.sort || ""}&status=${query.status || ""}`
+                        ) Sau
+>>>>>>> origin/home

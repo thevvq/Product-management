@@ -60,8 +60,6 @@ module.exports.detail = async (req, res) => {
             blog: result.data
         });
     } catch (err) {
-        console.error(err);
-
         res.render("client/pages/blog/detail", {
             pageTitle: "Lỗi hệ thống",
             blog: null

@@ -41,6 +41,7 @@
 }
 
 .box-head .inner-title {
+<<<<<<< HEAD
   margin-bottom: 0;
   font-size: 28px;
   font-weight: 600;
@@ -112,6 +113,15 @@
   padding: 3px 10px;
   border-radius: 8px;
 }
+=======
+    margin-bottom: 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: #3cb815;
+}
+
+
+>>>>>>> origin/home
 
 /* ============================================
    SLIDER
@@ -352,6 +362,7 @@
 /* ============================================
    FOOTER
 ============================================ */
+<<<<<<< HEAD
 .footer {
   background: #333;
   color: #fff;
@@ -362,12 +373,16 @@
 .footer p {
   margin: 0;
 }
+=======
+
+>>>>>>> origin/home
 
 footer.footer {
-  background: #f7f8fc;
+  background: #e8e8e8;
   padding: 40px 80px 50px;
   font-size: 14px;
-  color: #000;
+  color: #000000;
+  text-align: center;
 }
 
 .footer-container {
@@ -382,8 +397,9 @@ footer.footer {
   flex: 1;
 }
 
-.footer-brand .inner-logo {
+.footer-brand .inner-logo img{
   margin-bottom: 16px;
+  width: 200px;
 }
 
 .footer-title {
@@ -550,18 +566,8 @@ footer.footer {
   }
 }
 
-/* Nút Zalo nổi góc dưới phải */
-/* Floating Zalo button góc dưới phải */
-.zalo-chat-button {
-  position: fixed;
-  right: 24px;
-  bottom: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  z-index: 9999;
 
+<<<<<<< HEAD
   transition: transform 0.22s ease;
   will-change: transform;
 }
@@ -733,3 +739,5 @@ footer.footer {
     box-shadow: none;
   }
 }
+=======
+>>>>>>> origin/home

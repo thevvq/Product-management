@@ -10,7 +10,7 @@
     margin-bottom: 24px;
 }
 
-/* Tabs */
+/* ====== TABS ====== */
 .products-tabs {
     display: flex;
     justify-content: center;
@@ -22,12 +22,13 @@
 .products-tab {
     padding: 8px 22px;
     border-radius: 999px;
-    border: 1px solid #000;
-    background: #fff;
+    background: #3cb815;
+    color: #fff;
+    border: none;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.2s ease;
-
+    
     will-change: transform;
 }
 
@@ -37,11 +38,11 @@
 }
 
 .products-tab.active {
-    background: #000;
+    background: #f65005;
     color: #fff;
 }
 
-/* List + Card */
+/* ====== LIST + CARD ====== */
 .products-list {
     display: flex;
     flex-wrap: wrap;
@@ -49,6 +50,7 @@
     gap: 24px;
 }
 
+/* .product-card bây giờ là <a> nên style như link-card */
 .product-card {
     width: 210px;
     background: #fff;
@@ -57,6 +59,10 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.04);
     text-align: center;
 
+    display: block;             /* để toàn bộ card là vùng click */
+    text-decoration: none;      /* ❌ bỏ gạch chân */
+    color: inherit;             /* giữ màu chữ bên trong */
+
     transition: transform 0.22s ease, box-shadow 0.22s ease;
     will-change: transform;
 }
@@ -64,8 +70,10 @@
 .product-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 18px 34px rgba(0, 0, 0, 0.12);
+    text-decoration: none;      /* đảm bảo hover cũng không có gạch chân */
 }
 
+/* Ảnh */
 .product-card-image {
     width: 100%;
     height: 220px;
@@ -85,17 +93,53 @@
     transform: scale(1.03);
 }
 
+/* ====== TEXT & GIÁ ====== */
+
+/* Tên sản phẩm – xanh kiểu link, tối đa 2 dòng, KHÔNG mờ dần */
 .product-card-name {
     font-size: 16px;
     margin-bottom: 4px;
-    font-weight: 400;
+    font-weight: 600;
+    color: #0d6efd;         /* xanh link */
+
+    /* Giới hạn 2 dòng, không cho tràn */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;      /* số dòng tối đa */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+
+    line-height: 1.3;
 }
 
+/* Giá mới – xanh lá, in đậm */
 .product-card-price {
     font-size: 15px;
+    color: #28a745;
+    font-weight: 700;
+    margin-bottom: 2px;
 }
 
-/* nút xem thêm */
+/* Giá cũ – xám, gạch ngang */
+.product-card-price-old {
+    font-size: 14px;
+    color: #9ca3af;
+    text-decoration: line-through;
+    margin-bottom: 6px;
+}
+
+/* Badge giảm giá – nền đỏ, chữ trắng */
+.product-card-discount {
+    display: inline-block;
+    padding: 3px 14px;
+    border-radius: 999px;
+    background: #ff4d4f;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* ====== NÚT XEM THÊM ====== */
 .products-more {
     text-align: center;
     margin-top: 30px;
@@ -105,24 +149,24 @@
     display: inline-block;
     padding: 10px 28px;
     border-radius: 999px;
-    border: 1px solid #000;
-    text-decoration: none;
-    color: #000;
-    font-size: 14px;
 
-    transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease, color 0.22s ease;
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+    background-color: #3cb815;
+    transition: transform 0.22s ease, box-shadow 0.22s ease,
+                background 0.22s ease, color 0.22s ease;
     will-change: transform;
 }
 
 .products-more-btn:hover {
-    background: #000;
-    color: #fff;
-
+    background: #f65005;
+    color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
 }
 
-/* responsive */
+/* ====== RESPONSIVE ====== */
 @media (max-width: 768px) {
     .product-card {
         width: 46%;
@@ -135,6 +179,7 @@
     }
 }
 
+/* Trên mobile bỏ hover effect cho đỡ giật */
 @media (max-width: 768px) {
     .products-tab:hover,
     .product-card:hover,

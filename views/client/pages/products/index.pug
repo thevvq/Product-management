@@ -10,9 +10,50 @@ block main
             .col-12
                 +box-head('Danh sách sản phẩm')
 
-        .row
-            each item in products
-                .col-4.mb-3
+        // ================== THANH LỌC SẢN PHẨM ==================
+        .product-toolbar
+            // Số sản phẩm / trang
+            .product-toolbar-group
+                label(for="filter-per-page") Prev Page:
+                select#filter-per-page
+                    option(value="10" selected) 10
+                    option(value="20") 20
+                    option(value="30") 30
+                    option(value="50") 50
+
+            // Sắp xếp
+            .product-toolbar-group
+                label(for="filter-sort") Sort By:
+                select#filter-sort
+                    option(value="latest" selected) Sort by latest
+                    option(value="price_asc") Price: low → high
+                    option(value="price_desc") Price: high → low
+                    option(value="discount_desc") Biggest discount
+                    option(value="name_asc") Name A → Z
+
+            // Nút đổi view (grid / list)
+            .product-toolbar-group.product-toolbar-view
+                button.view-btn.is-active(type="button" data-view="grid" title="Grid view")
+                    i.fa-solid.fa-border-all
+                button.view-btn(type="button" data-view="list" title="List view")
+                    i.fa-solid.fa-list
+
+            // Ô search
+            .product-toolbar-group.product-toolbar-search
+                .search-input-wrapper
+                    input#filter-search(type="text" placeholder="Search by")
+                    button#filter-search-btn(type="button")
+                        i.fa-solid.fa-magnifying-glass
+
+        // ================== DANH SÁCH SẢN PHẨM ==================
+        .product-list
+            each item, index in products
+                .product-list-item(
+                    data-title=item.title
+                    data-price=item.newPrice
+                    data-discount=item.discountPercentage
+                    data-index=index
+                )
                     .product-item
                         a(href=`/detail/${item.slug}`)
                             .inner-image
@@ -32,3 +73,7 @@ block main
                             data-stock=item.stock
                         )
                             i.fa-solid.fa-cart-shopping.cart-icon
+                            
+
+block scripts
+    script(src="/js/products.js")

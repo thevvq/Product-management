@@ -3,7 +3,6 @@ module.exports.getList = async (query = {}) => {
     const limit = 6; // 6 bài / trang
     const page = Number(query.page) > 0 ? Number(query.page) : 1;
     const skip = (page - 1) * limit;
-
     // ===== FILTER (không phá chức năng cũ) =====
     const filter = {};
 
