@@ -5,18 +5,25 @@ block main
         h2.mb-4 Đơn hàng của tôi
 
         if !orders || orders.length === 0
-            p Bạn chưa có đơn hàng nào.
-        else
+            .empty-orders.d-flex.justify-content-center
+                .empty-orders-box.text-center(
+                    style="background:#fff;border-radius:12px;padding:40px 30px;max-width:420px;width:100%;box-shadow:0 8px 24px rgba(0,0,0,0.06);"
+                )
+                    
+                    h4.mb-2 Bạn chưa có đơn hàng nào
+                    p.text-muted.mb-4
+                        | Khi bạn đặt hàng, thông tin đơn hàng sẽ hiển thị tại đây.
+                    a.btn.btn-success(href="/products") Tiếp tục mua sắm
+
+        if orders && orders.length > 0
             each order in orders
                 .order-box(
                     style="border:1px solid #ddd;padding:16px;border-radius:8px;margin-bottom:22px;background:#fff;"
                 )
 
-                    // ===== HEADER ĐƠN HÀNG =====
                     .d-flex.justify-content-between.align-items-center
                         h3(style="font-size:20px;") Đơn hàng ##{order._id}
 
-                        // MÀU TRẠNG THÁI
                         if order.status === 'pending'
                             span.badge.bg-warning.text-dark Đang xử lý
                         else if order.status === 'confirmed'
@@ -32,7 +39,6 @@ block main
 
                     hr
 
-                    // ===== THÔNG TIN GIAO HÀNG =====
                     h4(style="font-size:18px;margin-top:10px;") Thông tin giao hàng
 
                     if order.shippingInfo
@@ -44,7 +50,6 @@ block main
 
                     hr
 
-                    // ===== DANH SÁCH SẢN PHẨM =====
                     h4(style="font-size:18px;margin-top:10px;") Sản phẩm
 
                     table.table.table-bordered.align-middle
@@ -60,19 +65,19 @@ block main
                             each item in order.items
                                 tr
                                     td
-                                        img(src=item.thumbnail, width="60", style="border-radius:6px;")
+                                        img(
+                                            src=item.thumbnail,
+                                            width="60",
+                                            style="border-radius:6px;"
+                                        )
                                     td #{item.title}
                                     td #{item.quantity}
                                     td $#{item.price}
                                     td $#{(item.quantity * item.price).toFixed(2)}
 
-                    // ===== TỔNG TIỀN =====
                     h4.mt-3
-                        | Tổng thanh toán: 
+                        | Tổng thanh toán:
                         span.text-danger $#{order.total.toFixed(2)}
 
-                    // ===== CÁC NÚT CHỨC NĂNG =====
                     .mt-3
-
                         a.btn.btn-primary(href=`/orders/${order._id}`) Xem chi tiết
-
