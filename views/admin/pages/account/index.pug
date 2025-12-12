@@ -5,7 +5,7 @@ block main
     +alert-success(3000)
     +alert-error(5000)
     
-    if role.permissions.includes('accounts_view')
+    if roleUser.permissions.includes('accounts_view')
         h1.mb-4 #{pageTitle}
 
         .card.mb-3
@@ -14,7 +14,7 @@ block main
                 .row.mb-3
                     .col-8
                     .col-4.text-end
-                        if role.permissions.includes('accounts_create')
+                        if roleUser.permissions.includes('accounts_create')
                             a.btn.btn-outline-success(
                                 href=`${prefixAdmin}/accounts/create`
                             ) + Thêm mới
@@ -44,7 +44,7 @@ block main
                                     td #{item.role.title}
                                     td #{item.email}
                                     td
-                                        if role.permissions.includes('accounts_edit')
+                                        if roleUser.permissions.includes('accounts_edit')
                                             if item.status == 'active'
                                                 a.badge.bg-success(
                                                     href="#"
@@ -69,9 +69,9 @@ block main
 
                                     td
                                         a(href=`${prefixAdmin}/accounts/detail/${item.id}`).btn.btn-secondary.btn-sm.me-1 Chi tiết
-                                        if role.permissions.includes('accounts_edit')
+                                        if roleUser.permissions.includes('accounts_edit')
                                             a(href=`${prefixAdmin}/accounts/edit/${item.id}`).btn.btn-warning.btn-sm Sửa
-                                        if role.permissions.includes('accounts_delete')
+                                        if roleUser.permissions.includes('accounts_delete')
                                             button.btn.btn-danger.btn-sm.ms-1(
                                                 data-id=item.id 
                                                 data-btn-delete=''

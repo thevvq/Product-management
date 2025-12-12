@@ -6,7 +6,7 @@ block main
     +alert-success(3000)
     +alert-error(5000)
 
-    if role.permissions.includes('accounts_edit')
+    if roleUser.permissions.includes('accounts_edit')
         h1.mb-4 #{pageTitle}
         div(account)
 

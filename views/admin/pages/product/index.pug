@@ -11,7 +11,7 @@ block main
     +alert-error(5000)
 
 
-    if role.permissions.includes('products_view')
+    if roleUser.permissions.includes('products_view')
 
         h1.mb-4 #{pageTitle}
 
@@ -36,7 +36,7 @@ block main
                     .col-8
                         +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
                     .col-4.text-end
-                        if role.permissions.includes('products_create')
+                        if roleUser.permissions.includes('products_create')
                             a.btn.btn-outline-success(
                                 href=`${prefixAdmin}/products/create`
                             ) + Thêm sản phẩm mới
@@ -77,7 +77,7 @@ block main
                                         min="1"
                                     )
                                 td
-                                    if role.permissions.includes('products_edit')
+                                    if roleUser.permissions.includes('products_edit')
                                         if item.status == 'active'
                                             a.badge.bg-success(
                                                 href="#"
@@ -102,9 +102,9 @@ block main
 
                                 td
                                     a(href=`${prefixAdmin}/products/detail/${item.id}`).btn.btn-secondary.btn-sm.me-1 Chi tiết
-                                    if role.permissions.includes('products_edit')
+                                    if roleUser.permissions.includes('products_edit')
                                         a(href=`${prefixAdmin}/products/edit/${item.id}`).btn.btn-warning.btn-sm Sửa
-                                    if role.permissions.includes('products_delete')
+                                    if roleUser.permissions.includes('products_delete')
                                         button.btn.btn-danger.btn-sm.ms-1(
                                             data-id=item.id 
                                             data-btn-delete=''

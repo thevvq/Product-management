@@ -5,7 +5,7 @@ block main
     +alert-success(3000)
     +alert-error(5000)
 
-    if role.permissions.includes('roles_edit')
+    if roleUser.permissions.includes('roles_edit')
         .container.mt-5
             h1 Chỉnh sửa Role
 

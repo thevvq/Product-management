@@ -2,7 +2,7 @@ extends ../../layouts/default
 
 block main
 
-    if role.permissions.includes('orders_view')
+    if roleUser.permissions.includes('orders_view')
         .container
             h1 Quản lý đơn hàng
 

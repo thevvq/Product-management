@@ -21,9 +21,12 @@ module.exports.requireAuth = async (req, res, next) => {
         req.flash("error", "Tài khoản bị khóa!");
         return res.redirect(`${sysConfig.prefixAdmin}/auth/login`);
     }
-    const role = await Role.findById(user.role_id).select('title permissions');
+    const role = await Role.findOne({
+        _id: user.role_id,
+        deleted: false
+    }).select('title permissions');
 
     res.locals.user = user;
-    res.locals.role = role;
+    res.locals.roleUser = role;
     next();
 };

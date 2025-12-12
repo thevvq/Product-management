@@ -9,7 +9,7 @@ block main
     +alert-success(3000)
     +alert-error(5000)
 
-    if role.permissions.includes('categories_view')
+    if roleUser.permissions.includes('categories_view')
         h1.mb-4 #{pageTitle}
 
         .card.mb-3
@@ -28,7 +28,7 @@ block main
                     .col-8
                         +form-change-multi(`${prefixAdmin}/categories/change-multi?_method=PATCH`)
                     .col-4.text-end
-                        if role.permissions.includes('categories_create')
+                        if roleUser.permissions.includes('categories_create')
                             a.btn.btn-outline-success(
                                 href=`${prefixAdmin}/categories/create`
                             ) + Thêm mới

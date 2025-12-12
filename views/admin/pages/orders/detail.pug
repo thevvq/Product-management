@@ -1,7 +1,7 @@
 extends ../../layouts/default
 
 block main
-    if role.permissions.includes('orders_view')
+    if roleUser.permissions.includes('orders_view')
         .container
             h2.mb-3 Chi tiết đơn hàng ##{order._id}
 
@@ -51,7 +51,7 @@ block main
                 span.text-danger $#{order.total.toFixed(2)}
 
             hr
-            if role.permissions.includes('orders_edit')
+            if roleUser.permissions.includes('orders_edit')
                 h3 Cập nhật trạng thái đơn
 
                 form(method="POST", action=`/admin/orders/${order._id}/status`, style="max-width:300px;")

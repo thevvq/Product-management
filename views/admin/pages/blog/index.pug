@@ -5,10 +5,10 @@ block main
     +alert-success(3000)
     +alert-error(5000)
 
-    if role.permissions.includes('blogs_view')
+    if roleUser.permissions.includes('blogs_view')
         .container.mt-4
             h2 Quản lý Blog
-            if role.permissions.includes('blogs_create')
+            if roleUser.permissions.includes('blogs_create')
                 a.btn.btn-primary.mt-2(href="/admin/blog/create") + Thêm bài viết
 
             // ===================== FORM LỌC =====================
@@ -85,9 +85,9 @@ block main
                                 td #{item.title}
                                 td #{item.createdAt.toLocaleDateString()}
                                 td
-                                    if role.permissions.includes('blogs_edit')
+                                    if roleUser.permissions.includes('blogs_edit')
                                         a.btn.btn-warning.btn-sm(href=`/admin/blog/edit/${item._id}`) Sửa
-                                    if role.permissions.includes('blogs_delete')
+                                    if roleUser.permissions.includes('blogs_delete')
                                         a.btn.btn-danger.btn-sm.ms-2(
                                             href=`/admin/blog/delete/${item._id}`
                                             onclick="return confirm('Bạn chắc chắn muốn xóa bài viết này?')"

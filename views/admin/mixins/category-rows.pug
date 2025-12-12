@@ -28,7 +28,7 @@ mixin category-rows(records, prefix = "", counter)
                 )
 
             td
-                if role.permissions.includes('categories_edit')
+                if roleUser.permissions.includes('categories_edit')
                     if item.status == 'active'
                         a.badge.bg-success(
                             href="#"
@@ -51,9 +51,9 @@ mixin category-rows(records, prefix = "", counter)
                     else
                         span.badge.bg-danger(style="min-width: 120px;") Dừng hoạt động
             td
-                if role.permissions.includes('categories_edit')
+                if roleUser.permissions.includes('categories_edit')
                     a(href=`${prefixAdmin}/categories/edit/${item.id}`).btn.btn-warning.btn-sm Sửa
-                if role.permissions.includes('categories_delete')
+                if roleUser.permissions.includes('categories_delete')
                     button.btn.btn-danger.btn-sm.ms-1(
                         data-id=item.id 
                         data-btn-delete=''

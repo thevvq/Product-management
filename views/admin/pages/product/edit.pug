@@ -6,7 +6,7 @@ block main
     +alert-success(3000)
     +alert-error(5000)
 
-    if role.permissions.includes('products_edit')
+    if roleUser.permissions.includes('products_edit')
         h1.mb-4 #{pageTitle}
 
         form(action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH` method="POST" id='form-edit-product' enctype="multipart/form-data")
