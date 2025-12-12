@@ -1,4 +1,5 @@
 const Role = require('../../models/role.model')
+const permissionLabel = require('../../helper/permissionLable')
 
 module.exports.getList = async () => {
     let find = {deleted: false}
@@ -39,7 +40,12 @@ module.exports.deleteRole = async (id) => {
 module.exports.detail = async (id) => {
     const role = await Role.findOne({ deleted: false, _id: id });
 
-    return role;
+    const permissionsDisplay = role.permissions.map(key => permissionLabel[key]);
+
+    return {
+        role,
+        permissionsDisplay
+    }
 }
 
 

@@ -2,22 +2,22 @@ extends ../../layouts/default.pug
 
 block main
 
-    if role.permissions.includes('roles_view')
+    if roleUser.permissions.includes('roles_view')
         .container.mt-5
             h2 Chi tiết nhóm quyền
 
             .card.mt-3
                 .card-body
-                    h4 #{record.title}
-                    p.text-muted.mt-2 #{record.description}
+                    h4 #{role.title}
+                    p.text-muted.mt-2 #{role.description}
 
                     hr
 
-                    h5 Quyền hạn (Permissions)
-                    if record.permissions && record.permissions.length > 0
+                    h5 Quyền hạn
+                    if permissionsDisplay.length
                         ul
-                            each per in record.permissions
-                                li #{per}
+                            each per in permissionsDisplay
+                                li= per
                     else
                         p.text-muted Không có quyền nào
 
@@ -25,11 +25,11 @@ block main
 
                     p
                         strong Tạo lúc:
-                        |  #{record.createdAt.toLocaleString()}
+                        |  #{role.createdAt.toLocaleString()}
 
                     p
                         strong Cập nhật lúc:
-                        |  #{record.updatedAt.toLocaleString()}
+                        |  #{role.updatedAt.toLocaleString()}
 
-        else
-            +alert-no-permission()
+    else
+        +alert-no-permission()

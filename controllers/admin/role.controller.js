@@ -94,7 +94,7 @@ module.exports.detail = async (req, res) => {
 
         res.render('admin/pages/role/detail', {
             pageTitle: 'Chi tiết nhóm quyền',
-            record
+            ...record
         })
 
     } catch (err) {
