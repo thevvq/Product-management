@@ -44,7 +44,7 @@
     margin-bottom: 0;
     font-size: 28px;
     font-weight: 600;
-    color: green;
+    color: #3cb815;
 }
 
 
@@ -279,22 +279,14 @@
 /* ============================================
    FOOTER
 ============================================ */
-.footer {
-    background: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px;
-}
 
-.footer p {
-    margin: 0;
-}
 
 footer.footer {
-  background: #f7f8fc;
+  background: #e8e8e8;
   padding: 40px 80px 50px;
   font-size: 14px;
-  color: #000;
+  color: #000000;
+  text-align: center;
 }
 
 .footer-container {
@@ -309,8 +301,9 @@ footer.footer {
   flex: 1;
 }
 
-.footer-brand .inner-logo {
+.footer-brand .inner-logo img{
   margin-bottom: 16px;
+  width: 200px;
 }
 
 .footer-title {

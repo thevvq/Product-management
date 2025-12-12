@@ -38,6 +38,15 @@
   letter-spacing: 0.06em;
 }
 
+.bf-card-blog .bf-btn,
+.bf-card-fanpage .bf-btn {
+  display: flex;
+  width: 160px;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+
 /* ===== CARD BLOG ===== */
 
 .bf-blog-list {
@@ -53,7 +62,7 @@
   align-items: center;
 }
 
-/* “hình” chữ bên trái (thật ra là text) */
+
 .bf-blog-thumb {
   flex: 0 0 180px;
   text-align: center;
@@ -62,7 +71,7 @@
   line-height: 1.5;
   letter-spacing: 0.08em;
   color: #111827;
-  white-space: pre-line; /* để \n xuống dòng */
+
 }
 
 .bf-blog-thumb-text {
@@ -73,12 +82,7 @@
   flex: 1;
 }
 
-.bf-blog-date {
-  display: block;
-  font-size: 11px;
-  color: #9ca3af;
-  margin-bottom: 4px;
-}
+
 
 .bf-blog-desc {
   margin: 0;
@@ -129,12 +133,12 @@
   gap: 8px;
   padding: 10px 26px;
   border-radius: 999px;
-  border: 1px solid #111827;
+
   font-size: 13px;
   font-weight: 500;
-  color: #111827;
+  color: #ffffff;
   text-decoration: none;
-  background: #fff;
+  background: #3cb815;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease,
     background-color 0.15s ease;
@@ -145,7 +149,7 @@
 }
 
 .bf-btn:hover {
-  background: #111827;
+  background: #f65005;
   color: #fff;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
   transform: translateY(-1px);
@@ -179,7 +183,7 @@
   font-size: 24px;
   font-weight: 500;
   text-align: center;
-  color: #ffffff;
+  color: #000000;
   margin-bottom: 40px;
   letter-spacing: 0.05em;
 }
@@ -264,12 +268,12 @@
   gap: 8px;
   padding: 9px 26px;
   border-radius: 999px;
-  border: 1px solid #111827;
+
   font-size: 13px;
   font-weight: 500;
-  color: #111827;
+  color: #ffffff;
   text-decoration: none;
-  background: #ffffff;
+  background: #3cb815;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease,
     background-color 0.15s ease, color 0.15s ease;
@@ -280,7 +284,7 @@
 }
 
 .shop-btn:hover {
-  background: #111827;
+  background: #f65005;
   color: #ffffff;
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
   transform: translateY(-1px);
