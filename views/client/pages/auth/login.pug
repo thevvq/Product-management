@@ -1,24 +1,41 @@
 extends ../../layouts/default
 
 block main
-    // 👉 Gắn file CSS riêng cho trang login
+    // CSS riêng cho trang login
     link(rel="stylesheet", href="/css/login.css")
 
     .auth-container
         .auth-box
             h2.title Đăng nhập
 
+            // ===== LỖI TỪ SERVICE (EMAIL / PASSWORD) =====
             if error
                 .alert.alert-danger #{error}
+
+            // ===== LỖI VALIDATE =====
+            if errors && errors.length
+                .alert.alert-danger
+                    ul.mb-0
+                        each err in errors
+                            li= err.msg
 
             form(method="POST", action="/login")
                 .form-group
                     label Email
-                    input(type="email", name="email", placeholder="Nhập email..." required)
+                    input(
+                        type="email",
+                        name="email",
+                        placeholder="Nhập email...",
+                        value=(oldData && oldData.email) ? oldData.email : ""
+                    )
 
                 .form-group
                     label Mật khẩu
-                    input(type="password", name="password", placeholder="Nhập mật khẩu..." required)
+                    input(
+                        type="password",
+                        name="password",
+                        placeholder="Nhập mật khẩu..."
+                    )
 
                 button.btn-login(type="submit") Đăng nhập
 
