@@ -23,7 +23,8 @@ module.exports.login = async (req, res) => {
         httpOnly: true,
         sameSite: "lax"
     });
-    
+
+    // session
     req.session.user = {
         _id: user._id,
         fullName: user.fullName,

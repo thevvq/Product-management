@@ -1,34 +1,83 @@
 extends ../../layouts/default
 
 block main
-    // 👉 Gắn CSS riêng cho trang đăng ký
     link(rel="stylesheet", href="/css/register.css")
 
     .auth-container
         .auth-box
-            h2.title Đăng ký tài khoản
+            h2.title Đăng ký
 
             if error
                 .alert.alert-danger #{error}
 
-            if success
-                .alert.alert-success #{success}
+            if errors && errors.length
+                .alert.alert-danger
+                    ul.mb-0
+                        each err in errors
+                            li= err.msg
 
             form(method="POST", action="/register")
                 .form-group
-                    label Họ và tên
-                    input(type="text", name="fullName", placeholder="Nhập họ tên..." required)
+                    label Họ tên
+                    input(
+                        type="text",
+                        name="fullName",
+                        placeholder="Nhập họ tên...",
+                        value=(oldData && oldData.fullName) ? oldData.fullName : ""
+                    )
 
                 .form-group
                     label Email
-                    input(type="email", name="email", placeholder="Nhập email..." required)
+                    input(
+                        type="email",
+                        name="email",
+                        placeholder="Nhập email...",
+                        value=(oldData && oldData.email) ? oldData.email : ""
+                    )
 
-                .form-group
+                // ===== PASSWORD =====
+                .form-group.password-group
                     label Mật khẩu
-                    input(type="password", name="password", placeholder="Nhập mật khẩu..." required)
+                    .password-wrapper
+                        input(
+                            type="password",
+                            name="password",
+                            id="password",
+                            placeholder="Nhập mật khẩu..."
+                        )
+                        span.toggle-password(
+                            onclick="togglePassword('password', this)"
+                        ) 👁
 
-                button.btn-register(type="submit") Đăng ký
+                // ===== CONFIRM PASSWORD =====
+                .form-group.password-group
+                    label Nhập lại mật khẩu
+                    .password-wrapper
+                        input(
+                            type="password",
+                            name="confirmPassword",
+                            id="confirmPassword",
+                            placeholder="Nhập lại mật khẩu..."
+                        )
+                        span.toggle-password(
+                            onclick="togglePassword('confirmPassword', this)"
+                        ) 👁
+
+                button(type="submit") Đăng ký
 
             p.switch-text
                 | Đã có tài khoản?
                 a(href="/login") Đăng nhập →
+
+    // ===== SCRIPT SHOW / HIDE PASSWORD =====
+    script.
+        function togglePassword(id, el) {
+            const input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+                el.textContent = "🙈";
+            } else {
+                input.type = "password";
+                el.textContent = "👁";
+            }
+        }

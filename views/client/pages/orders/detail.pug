@@ -10,7 +10,6 @@ block main
         else
             h2.mb-3 Chi tiết đơn hàng ##{order._id}
 
-            
             h4 Trạng thái đơn hàng:
             if order.status === "pending"
                 span.badge.bg-warning.text-dark Đang xử lý
@@ -51,22 +50,30 @@ block main
                         tr
                             td
                                 if item.thumbnail
-                                    img(src=item.thumbnail, width="60", height="60", style="object-fit:cover;border-radius:6px;")
+                                    img(
+                                        src=item.thumbnail,
+                                        width="60",
+                                        height="60",
+                                        style="object-fit:cover;border-radius:6px;"
+                                    )
                                 else
                                     span (Không có ảnh)
                             td #{item.title}
                             td #{item.quantity}
-                            td $#{item.price}
-                            td $#{(item.price * item.quantity).toFixed(2)}
+                            td
+                                | #{item.price.toLocaleString("vi-VN")} ₫
+                            td
+                                | #{(item.price * item.quantity).toLocaleString("vi-VN")} ₫
 
             hr
 
-            h3 Tổng thanh toán:
-                span.text-danger(style="margin-left:6px;") $#{order.total.toFixed(2)}
+            h3
+                | Tổng thanh toán:
+                span.text-danger(style="margin-left:6px;")
+                    | #{order.total.toLocaleString("vi-VN")} ₫
 
             hr
 
-     
             .mt-3
                 a.btn.btn-secondary(href="/orders") Quay lại danh sách
 
@@ -77,5 +84,6 @@ block main
                     ) Hủy đơn hàng
                 else if order.status === "cancelled"
                     span.text-danger.ms-2 Đơn hàng đã bị hủy
+
 block scripts
     script(src="/js/order.js")

@@ -1,59 +1,64 @@
 const profileService = require("../../services/client/profile.service");
 
-// [GET] /client/profile
+// [GET] /profile
 module.exports.index = (req, res) => {
     try {
-        const loggedIn = profileService.checkLogin(req.session.user);
-
-        if (!loggedIn) {
+        if (!profileService.checkLogin(req.session.user)) {
             return res.redirect("/login");
         }
 
         res.render("client/pages/profile/index", {
             pageTitle: "Thông tin tài khoản",
-            user: req.session.user,
+            user: req.session.user
         });
 
     } catch (err) {
-        console.error(err);
-        res.redirect("/login");
+        console.error("PROFILE PAGE ERROR:", err);
+        return res.redirect("/login");
     }
 };
 
-// [POST] /client/profile
+// [POST] /profile
 module.exports.updateProfile = async (req, res) => {
     try {
-        const loggedIn = profileService.checkLogin(req.session.user);
-
-        if (!loggedIn) {
-            return res.json({
+        if (!req.session.user || !req.session.user._id) {
+            return res.status(401).json({
                 success: false,
                 message: "Bạn chưa đăng nhập!"
             });
         }
 
-        // Chuẩn bị data update (có thể bao gồm avatar)
+        // Chuẩn bị data update
         const updatePackage = await profileService.prepareUpdateData(req);
 
-        // Update DB
+        // Update DB (DÙNG ID TRONG SESSION)
         const updatedUser = await profileService.updateUserInDatabase(
             updatePackage.id,
             updatePackage.data
         );
 
-        // Cập nhật session
-        req.session.user = updatedUser;
+        // Update lại session
+        req.session.user = {
+            _id: updatedUser._id,
+            fullName: updatedUser.fullName,
+            email: updatedUser.email,
+            avatar: updatedUser.avatar,
+            phone: updatedUser.phone,
+            gender: updatedUser.gender,
+            birthday: updatedUser.birthday,
+            address: updatedUser.address
+        };
 
         return res.json({
             success: true,
             message: "Cập nhật thành công!",
-            user: updatedUser
+            user: req.session.user
         });
 
     } catch (err) {
-        console.error(err);
+        console.error("UPDATE PROFILE ERROR:", err);
 
-        return res.json({
+        return res.status(500).json({
             success: false,
             message: "Cập nhật thất bại!"
         });

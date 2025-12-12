@@ -16,21 +16,29 @@ block main
                 each item in items
                     tr
                         td
-                            img(src=item.thumbnail, width="60", style="border-radius:6px;object-fit:cover;")
+                            img(
+                                src=item.thumbnail,
+                                width="60",
+                                style="border-radius:6px;object-fit:cover;"
+                            )
                         td #{item.title}
-                        td $#{item.price}
+                        td
+                            | #{item.price.toLocaleString("vi-VN")} ₫
                         td #{item.quantity}
-                        td $#{(item.price * item.quantity).toFixed(2)}
+                        td
+                            | #{(item.price * item.quantity).toLocaleString("vi-VN")} VND   
 
         hr
 
-        h3 Tổng tiền:
-            span.text-danger $#{total.toFixed(2)}
+        h3
+            | Tổng tiền:
+            span.text-danger &nbsp;
+                | #{total.toLocaleString("vi-VN")} VND
 
         hr
 
         form#checkoutForm(method="POST")
-            // ⭐ Ở đây selectedItems ĐÃ LÀ CHUỖI JSON (từ controller)
+            // ⭐ selectedItems là CHUỖI JSON từ controller
             input#selectedItemsInput(
                 type="hidden"
                 name="selectedItems"
@@ -41,19 +49,33 @@ block main
 
             .mb-3
                 label.form-label Tên người nhận:
-                input.form-control(type="text" name="name" required)
+                input.form-control(
+                    type="text"
+                    name="name"
+                    required
+                    value=(profile && profile.fullName) ? profile.fullName : ""
+                )
 
             .mb-3
                 label.form-label Số điện thoại:
-                input.form-control(type="text" name="phone" required)
+                input.form-control(
+                    type="text"
+                    name="phone"
+                    required
+                    value=(profile && profile.phone) ? profile.phone : ""
+                )
 
             .mb-3
                 label.form-label Địa chỉ nhận hàng:
-                input.form-control(type="text" name="address" required)
+                input.form-control(
+                    type="text"
+                    name="address"
+                    required
+                    value=(profile && profile.address) ? profile.address : ""
+                )
 
-            button#btnPlaceOrder.btn.btn-success.mt-3(type="submit") 
+            button#btnPlaceOrder.btn.btn-success.mt-3(type="submit")
                 | Xác nhận đặt hàng
 
 block scripts
     script(src="/js/checkout.js")
-    

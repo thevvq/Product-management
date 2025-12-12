@@ -99,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     body: JSON.stringify({ productId: id, quantity: qty })
                 });
 
-                // chỉ cập nhật tổng khi đang ở trang giỏ
                 updateTotal();
             } catch (err) {
                 Swal.fire({ icon: "error", title: "Không thể cập nhật!" });
@@ -167,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // ============================================================
-    // 5) TÍNH TỔNG TIỀN SẢN PHẨM ĐÃ CHỌN (CHỈ Ở TRANG GIỎ HÀNG)
+    // 5) TÍNH TỔNG TIỀN SẢN PHẨM ĐÃ CHỌN (TRANG GIỎ HÀNG)
     // ============================================================
 
     const checkboxes = document.querySelectorAll(".select-item");
@@ -175,7 +174,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const hiddenInput = document.getElementById("selectedItemsInput");
 
     function updateTotal() {
-        // ❗ Nếu không có checkbox (tức là KHÔNG phải trang giỏ hàng) → KHÔNG làm gì cả
         if (!checkboxes || checkboxes.length === 0) return;
 
         let selectedIds = [];
@@ -195,18 +193,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (hiddenInput) {
             hiddenInput.value = JSON.stringify(selectedIds);
-            console.log("UPDATED selectedItemsInput:", hiddenInput.value);
         }
 
         if (totalDisplay) {
-            totalDisplay.textContent = "$" + total.toFixed(2);
+            // ✅ FORMAT VND – KHÔNG ĐỔI LOGIC
+            totalDisplay.textContent = total.toLocaleString("vi-VN") + " VND";
         }
     }
 
-    // Chỉ gắn event & tính tổng nếu thực sự đang có checkbox (nghĩa là đang ở /cart)
     if (checkboxes && checkboxes.length > 0) {
         checkboxes.forEach(cb => cb.addEventListener("change", updateTotal));
         qtyInputs.forEach(input => input.addEventListener("change", updateTotal));
-        updateTotal(); // tính tổng lần đầu
+        updateTotal();
     }
 });

@@ -20,8 +20,8 @@ block main
 
                             .inner-content
                                 h3.inner-title #{item.title}
-                                .inner-price-new $#{item.newPrice}
-                                .inner-price-old $#{item.price}
+                                .inner-price-new #{item.newPrice} VND
+                                .inner-price-old #{item.price} VND
                                 .inner-discount -#{item.discountPercentage}%
 
                         button.btn-add-cart(
