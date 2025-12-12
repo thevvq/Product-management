@@ -1,12 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const ordersCtrl = require("../../controllers/client/orders.controller");
+const ordersAdminCtrl = require("../../controllers/admin/orders.controller");
 
-router.get("/", ordersCtrl.orderList);
-
-router.get("/:id", ordersCtrl.orderDetail);
-
-
-router.post("/:id/cancel", ordersCtrl.cancelOrder);
+// /admin/orders
+router.get("/", ordersAdminCtrl.index);
+router.get("/:id", ordersAdminCtrl.detail);
+router.post("/:id/status", ordersAdminCtrl.updateStatus);
 
 module.exports = router;
