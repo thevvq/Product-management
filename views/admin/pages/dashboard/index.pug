@@ -5,4 +5,56 @@ block main
     +alert-success(3000)
     +alert-error(5000)
     
-    h1 Trang tổng quan
+    .container-fluid
+        .d-flex.justify-content-between.align-items-center.mb-4
+            h2 TỔNG QUAN
+            .d-flex.gap-2
+                button.btn.btn-success(type="button" id="exportExcel")
+                    i.fa-solid.fa-file-excel.me-2
+                    | Xuất Excel
+
+                button.btn.btn-danger(type="button" id="exportWord")
+                    i.fa-solid.fa-file-word.me-2
+                    | Xuất Word
+
+        .row.mb-4
+            .col-md-3.mb-3
+                .card.text-white.bg-primary
+                    .card-body
+                        h5.card-title Doanh thu hôm nay
+                        p.card-text #{Number(statistics.todayRevenue).toLocaleString('vi-VN')} VND
+
+            .col-md-3.mb-3
+                .card.text-white.bg-success
+                    .card-body
+                        h5.card-title Doanh thu tháng này
+                        p.card-text #{Number(statistics.monthRevenue).toLocaleString('vi-VN')} VND
+
+            .col-md-3.mb-3
+                .card.text-white.bg-info
+                    .card-body
+                        h5.card-title Tổng số đơn hàng
+                        p.card-text #{statistics.totalOrders}
+
+            .col-md-3.mb-3
+                .card.text-white.bg-warning
+                    .card-body
+                        h5.card-title Tổng doanh thu
+                        p.card-text #{Number(statistics.totalRevenue).toLocaleString('vi-VN')} VND
+
+        .card
+            .card-header
+                .d-flex.justify-content-between.align-items-center
+                    h4.mb-0 Biểu đồ thống kê doanh thu
+                    .btn-group(role="group")
+                        button.btn.btn-outline-primary.btn-sm(type="button" data-chart-type="day") Theo ngày
+                        button.btn.btn-outline-primary.btn-sm(type="button" data-chart-type="month") Theo tháng
+                        button.btn.btn-outline-primary.btn-sm(type="button" data-chart-type="quarter") Theo quý
+                        button.btn.btn-outline-primary.btn-sm(type="button" data-chart-type="year") Theo năm
+
+            .card-body
+                canvas#revenueChart(style="max-height: 400px;")
+
+
+    script(src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js")
+    script(src="/admin/js/dashboard.js")
