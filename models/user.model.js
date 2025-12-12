@@ -38,19 +38,6 @@ const userSchema = new mongoose.Schema(
             type: String,
             default: ""
         },
-        gender: {
-            type: String,
-            enum: ["male", "female", "other", ""],
-            default: ""
-        },
-        birthday: {
-            type: String,
-            default: ""
-        },
-        address: {
-            type: String,
-            default: ""
-        },
         deleted: {
             type: Boolean,
             default: false

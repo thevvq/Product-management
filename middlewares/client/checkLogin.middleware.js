@@ -1,20 +1,23 @@
-const Account = require('../../models/user.model');
-const sysConfig = require('../../config/system');
+const Account = require('../../models/user-client');
 
 module.exports.requireAuthClient = async (req, res, next) => {
     try {
         const token = req.cookies.token;
 
         if (!token) {
-            req.flash("error", "Bạn cần đăng nhập!");
-            return res.redirect('/login');
+            return res.status(401).json({
+                success: false,
+                message: "Bạn cần đăng nhập!"
+            });
         }
 
         const user = await Account.findOne({ token, deleted: false }).select('-password');
 
         if (!user) {
-            req.flash("error", "Phiên đăng nhập không hợp lệ!");
-            return res.redirect('/login');
+            return res.status(401).json({
+                success: false,
+                message: "Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại!"
+            });
         }
 
         res.locals.user = user;
@@ -22,7 +25,9 @@ module.exports.requireAuthClient = async (req, res, next) => {
         next();
     } catch (err) {
         console.error(err);
-        req.flash("error", "Có lỗi xảy ra, vui lòng thử lại!");
-        return res.redirect('/login');
+        return res.status(500).json({
+            success: false,
+            message: "Có lỗi xảy ra, vui lòng thử lại!"
+        });
     }
 };

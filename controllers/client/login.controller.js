@@ -7,27 +7,38 @@ module.exports = {
         });
     },
 
-    handleLogin: async (req, res) => {
-        const { email, password } = req.body;
+    handleLogin: async (req, res) => {   
+        try {
+            await loginService.login(req, res);
+            res.redirect("/");
+            
+        } catch (err) {
+            console.log(err)
+            switch (err.message) {
+                case "EMAIL_NOT_FOUND":
+                    return res.render("client/pages/auth/login", {
+                        pageTitle: "Đăng nhập",
+                        error: "Email không tồn tại!"
+                    });
 
-        const user = await loginService.login(email, password);
+                case "PASSWORD_ERROR":
+                    return res.render("client/pages/auth/login", {
+                        pageTitle: "Đăng nhập",
+                        error: "Mật khẩu không đúng!"
+                    });
 
-        if (!user) {
-            return res.render("client/pages/auth/login", {
-                pageTitle: "Đăng nhập",
-                error: "Email hoặc mật khẩu không đúng!"
-            });
+                default:
+                    return res.render("client/pages/auth/login", {
+                        pageTitle: "Đăng nhập",
+                        error: "Có lỗi xảy ra, vui lòng thử lại!"
+                    });
+            }
         }
-
-        // Lưu session
-        req.session.user = user;
-
-        return res.redirect("/");
     },
 
     logout: (req, res) => {
-        req.session.destroy(() => {
-            res.redirect("/login");
-        });
+        loginService.logout(res)
+
+        res.redirect("/login");
     }
 };

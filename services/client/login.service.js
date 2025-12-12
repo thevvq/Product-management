@@ -1,16 +1,27 @@
-const User = require("../../models/user.model");
+const Account = require('../../models/user-client')
 const bcrypt = require("bcrypt");
 
-module.exports = {
-    login: async (email, password) => {
-        const user = await User.findOne({ email: email });
+module.exports.login= async (req, res) => {
+    const { email, password } = req.body
 
-        if (!user) return null;
+    const user = await Account.findOne({
+        email: email,
+        deleted: false
+    })
 
-        const match = await bcrypt.compare(password, user.password);
-
-        if (!match) return null;
-
-        return user;
+    if (!user) {
+        throw new Error("EMAIL_NOT_FOUND")
     }
+
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch) {
+        throw new Error("PASSWORD_ERROR")
+    }
+
+    res.cookie('token', user.token)
+    return
+};
+
+module.exports.logout = ( res) => {
+    res.clearCookie('token');
 };

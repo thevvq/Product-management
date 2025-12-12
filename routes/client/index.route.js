@@ -9,6 +9,7 @@ const cartRoute = require("./cart.route");
 const checkoutRoute = require("./checkout.route");
 const ordersRoute = require("./orders.route");
 
+const middlewareCheckLogin = require("../../middlewares/client/checkLogin.middleware");
 // 👇 THÊM: service lấy danh mục
 const categoryService = require("../../services/client/category.service");
 
@@ -26,9 +27,9 @@ module.exports = (app) => {
         next();
     });
 
-    app.use("/profile", profileRoutes);
+    app.use("/profile", middlewareCheckLogin.requireAuthClient, profileRoutes);
 
-    app.use("/cart", cartRoutes);
+    app.use("/cart", middlewareCheckLogin.requireAuthClient, cartRoutes);
 
     app.use("/blog", blogRoutes);
 
@@ -40,9 +41,9 @@ module.exports = (app) => {
 
     app.use("/register", registerRoute);
     
-    app.use("/cart", cartRoute);
+    app.use("/cart", middlewareCheckLogin.requireAuthClient, cartRoute);
 
-    app.use("/checkout", checkoutRoute);
+    app.use("/checkout", middlewareCheckLogin.requireAuthClient, checkoutRoute);
 
-    app.use("/orders", ordersRoute);
+    app.use("/orders", middlewareCheckLogin.requireAuthClient, ordersRoute);
 };
