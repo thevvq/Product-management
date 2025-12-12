@@ -32,11 +32,18 @@ block main
                                 )
 
                             td
-                                img(src=item.thumbnail, width="70", height="70", style="object-fit:cover;border-radius:6px;")
+                                img(
+                                    src=item.thumbnail,
+                                    width="70",
+                                    height="70",
+                                    style="object-fit:cover;border-radius:6px;"
+                                )
 
                             td #{item.title}
 
-                            td.price(data-value=item.price) $#{item.price}
+                            // ===== GIÁ (VND) =====
+                            td.price(data-value=item.price)
+                                | #{item.price.toLocaleString("vi-VN")} VND
 
                             td
                                 input.qty-box(
@@ -48,7 +55,9 @@ block main
                                     style="width:70px;text-align:center;border-radius:6px;"
                                 )
 
-                            td.subtotal $#{(item.price * item.quantity).toFixed(2)}
+                            // ===== THÀNH TIỀN (VND) =====
+                            td.subtotal
+                                | #{(item.price * item.quantity).toLocaleString("vi-VN")} VND
 
                             td
                                 button.btn.btn-danger.btn-delete(
@@ -57,12 +66,18 @@ block main
 
             hr
 
-            h3.mt-3 Tổng tiền: 
-                span#selectedTotal.text-danger $0.00
+            h3.mt-3
+                | Tổng tiền:
+                span#selectedTotal.text-danger 0 VND
 
             form(action="/checkout" method="POST")
-                input(type="hidden" id="selectedItemsInput" name="selectedItems")
-                button.btn.btn-success.mt-3(type="submit") Tiến hành đặt hàng
+                input(
+                    type="hidden"
+                    id="selectedItemsInput"
+                    name="selectedItems"
+                )
+                button.btn.btn-success.mt-3(type="submit")
+                    | Tiến hành đặt hàng
 
 block scripts
     script(src="/js/cart.js")

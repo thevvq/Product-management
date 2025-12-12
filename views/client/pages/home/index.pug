@@ -32,9 +32,9 @@ block main
                             .product-card-body
                                 h3.product-card-name= product.title || product.name || 'Chưa có tên'
                                 if product.newPrice
-                                    p.product-card-price #{Number(product.newPrice).toLocaleString('vi-VN')}đ
+                                    p.product-card-price #{Number(product.newPrice).toLocaleString('vi-VN')} VND
                                 else if product.price
-                                    p.product-card-price #{Number(product.price).toLocaleString('vi-VN')}đ
+                                    p.product-card-price #{Number(product.price).toLocaleString('vi-VN')} VND
                 else
                     p.text-muted.text-center Chưa có sản phẩm nào.
 

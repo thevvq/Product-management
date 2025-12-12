@@ -9,7 +9,6 @@ block main
                 .empty-orders-box.text-center(
                     style="background:#fff;border-radius:12px;padding:40px 30px;max-width:420px;width:100%;box-shadow:0 8px 24px rgba(0,0,0,0.06);"
                 )
-                    
                     h4.mb-2 Bạn chưa có đơn hàng nào
                     p.text-muted.mb-4
                         | Khi bạn đặt hàng, thông tin đơn hàng sẽ hiển thị tại đây.
@@ -35,7 +34,8 @@ block main
                         else if order.status === 'cancelled'
                             span.badge.bg-danger.text-white Đã hủy
 
-                    p.text-muted.mt-1 Ngày đặt: #{order.createdAt.toLocaleString()}
+                    p.text-muted.mt-1
+                        | Ngày đặt: #{order.createdAt.toLocaleString("vi-VN")}
 
                     hr
 
@@ -72,12 +72,15 @@ block main
                                         )
                                     td #{item.title}
                                     td #{item.quantity}
-                                    td $#{item.price}
-                                    td $#{(item.quantity * item.price).toFixed(2)}
+                                    td
+                                        | #{item.price.toLocaleString("vi-VN")} ₫
+                                    td
+                                        | #{(item.quantity * item.price).toLocaleString("vi-VN")} VND
 
                     h4.mt-3
                         | Tổng thanh toán:
-                        span.text-danger $#{order.total.toFixed(2)}
+                        span.text-danger
+                            | #{order.total.toLocaleString("vi-VN")} VND
 
                     .mt-3
                         a.btn.btn-primary(href=`/orders/${order._id}`) Xem chi tiết
