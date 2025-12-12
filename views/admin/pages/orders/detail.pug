@@ -1,23 +1,21 @@
 extends ../../layouts/default
 
 block main
-    if roleUser.permissions.includes('orders_view')
+    - const permissions = (roleUser && Array.isArray(roleUser.permissions)) ? roleUser.permissions : []
+
+    if permissions.includes('orders_view')
         .container
             h2.mb-3 Chi tiết đơn hàng ##{order._id}
 
-<<<<<<< HEAD
-            p.text-muted Ngày đặt: #{order.createdAt.toLocaleString()}
-=======
-        p.text-muted 
-            | Ngày đặt: #{order.createdAt.toLocaleDateString('vi-VN')} #{order.createdAt.toLocaleTimeString('vi-VN')}
->>>>>>> origin/home
+            p.text-muted
+                | Ngày đặt: #{order.createdAt.toLocaleDateString('vi-VN')} #{order.createdAt.toLocaleTimeString('vi-VN')}
 
             h4 Trạng thái hiện tại:
             span.badge(
                 class= order.status === 'cancelled' ? 'bg-secondary' :
-                    order.status === 'completed' ? 'bg-success' :
-                    order.status === 'shipping' ? 'bg-info' :
-                    order.status === 'confirmed' ? 'bg-primary' : 'bg-warning text-dark'
+                      order.status === 'completed' ? 'bg-success' :
+                      order.status === 'shipping' ? 'bg-info' :
+                      order.status === 'confirmed' ? 'bg-primary' : 'bg-warning text-dark'
             ) #{order.statusText}
 
             hr
@@ -52,11 +50,12 @@ block main
                             td $#{(item.quantity * item.price).toFixed(2)}
 
             h3.mt-3
-                | Tổng thanh toán: 
-                span.text-danger $#{order.total.toFixed(2)}
+                | Tổng thanh toán:
+                span.text-danger &nbsp;$#{order.total.toFixed(2)}
 
             hr
-            if roleUser.permissions.includes('orders_edit')
+
+            if permissions.includes('orders_edit')
                 h3 Cập nhật trạng thái đơn
 
                 form(method="POST", action=`/admin/orders/${order._id}/status`, style="max-width:300px;")
@@ -69,6 +68,6 @@ block main
 
                     button.btn.btn-success.mt-3(type="submit") Lưu trạng thái
 
-                a.btn.btn-secondary.mt-3.ms-2(href="/admin/orders") Quay lại danh sách
+            a.btn.btn-secondary.mt-3(href="/admin/orders") Quay lại danh sách
     else
         +alert-no-permission()
