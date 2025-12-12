@@ -23,18 +23,33 @@ block main
                 if productsHome && productsHome.length
                     each product, index in productsHome
                         - const catTab = index % 3 === 0 ? 'best' : (index % 3 === 1 ? 'new' : 'top');
-                        .product-card(data-category=catTab)
+                        a.product-card(
+                            href='/detail/' + product.slug
+                            data-category=catTab
+                        )
                             .product-card-image
                                 if product.thumbnail
                                     img(src=product.thumbnail, alt=product.title || product.name || 'Sản phẩm')
                                 else
                                     img(src="/images/logo.svg", alt=product.title || product.name || 'Sản phẩm')
+
                             .product-card-body
+                                // tên sản phẩm
                                 h3.product-card-name= product.title || product.name || 'Chưa có tên'
+
+                                // giá mới (ưu tiên newPrice, nếu không có thì dùng price)
                                 if product.newPrice
                                     p.product-card-price #{Number(product.newPrice).toLocaleString('vi-VN')}đ
                                 else if product.price
                                     p.product-card-price #{Number(product.price).toLocaleString('vi-VN')}đ
+
+                                // giá cũ (chỉ hiện nếu có discountPercentage & price gốc)
+                                if product.discountPercentage && product.price
+                                    p.product-card-price-old #{Number(product.price).toLocaleString('vi-VN')}đ
+
+                                // badge % giảm
+                                if product.discountPercentage
+                                    span.product-card-discount -#{product.discountPercentage}%
                 else
                     p.text-muted.text-center Chưa có sản phẩm nào.
 
