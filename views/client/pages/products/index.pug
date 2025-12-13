@@ -46,33 +46,39 @@ block main
                         i.fa-solid.fa-magnifying-glass
 
         // ================== DANH SÁCH SẢN PHẨM ==================
-        .product-list
-            each item, index in products
-                .product-list-item(
-                    data-title=item.title
-                    data-price=item.newPrice
-                    data-discount=item.discountPercentage
-                    data-index=index
-                )
-                    .product-item
-                        a(href=`/detail/${item.slug}`)
-                            .inner-image
-                                img(src=item.thumbnail, alt=item.title)
+        if !products || products.length === 0
+            .empty-state.text-center(style="padding:60px 0;")
+                img(src="/images/none product.png" width="120" alt="no-products")
+                h4.mt-3 Không có sản phẩm nào
+                p.text-muted Nếu bạn muốn, hãy thử các bộ lọc khác hoặc quay lại sau.
+        else
+            .product-list
+                each item, index in products
+                    .product-list-item(
+                        data-title=item.title
+                        data-price=item.newPrice
+                        data-discount=item.discountPercentage
+                        data-index=index
+                    )
+                        .product-item
+                            a(href=`/detail/${item.slug}`)
+                                .inner-image
+                                    img(src=item.thumbnail, alt=item.title)
 
-                            .inner-content
-                                h3.inner-title #{item.title}
-                                .inner-price-new #{item.newPrice} VND
-                                .inner-price-old #{item.price} VND
-                                .inner-discount -#{item.discountPercentage}%
+                                .inner-content
+                                    h3.inner-title #{item.title}
+                                    .inner-price-new #{item.newPrice} VND
+                                    .inner-price-old #{item.price} VND
+                                    .inner-discount -#{item.discountPercentage}%
 
-                        button.btn-add-cart(
-                            data-id=item._id
-                            data-title=item.title
-                            data-price=item.newPrice
-                            data-image=item.thumbnail
-                            data-stock=item.stock
-                        )
-                            i.fa-solid.fa-cart-shopping.cart-icon
+                            button.btn-add-cart(
+                                data-id=item._id
+                                data-title=item.title
+                                data-price=item.newPrice
+                                data-image=item.thumbnail
+                                data-stock=item.stock
+                            )
+                                i.fa-solid.fa-cart-shopping.cart-icon
                             
 
 block scripts
