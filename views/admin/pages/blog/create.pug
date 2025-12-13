@@ -24,10 +24,9 @@ block main
                     textarea.form-control#editor(name="content", rows="10", required)
 
                 button.btn.btn-success.mt-3(type="submit") Lưu bài viết
-<<<<<<< HEAD
-=======
+
                 a.btn.btn-secondary.ms-2(href="/admin/blog") Hủy
->>>>>>> 7478475efd785f7008bfae580697ce2f4c36a618
+
     else
         +alert-no-permission()
 
@@ -45,8 +44,4 @@ block main
             const img = document.getElementById("preview");
             img.src = URL.createObjectURL(e.target.files[0]);
             img.style.display = "block";
-<<<<<<< HEAD
         }
-=======
-        }
->>>>>>> 7478475efd785f7008bfae580697ce2f4c36a618
