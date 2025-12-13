@@ -7,7 +7,7 @@ block main
         .auth-box
             h2.title Đăng ký
 
-            form(method="POST", action="/register")
+            form(method="POST", action="/register" id="registerForm")
                 .form-group
                     label Họ tên
                     input(
@@ -72,3 +72,6 @@ block main
                 el.textContent = "👁";
             }
         }
+
+block scripts
+    script(src="/js/register.js")
