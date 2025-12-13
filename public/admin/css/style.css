@@ -301,15 +301,15 @@ html, body {
    ALERT
 ========================= */
 [show-alert] {
+    z-index: 2000;
+    top: 90px;
     position: fixed;
-    top: 20px;
     right: 20px;
     min-width: 280px;
     padding: 12px 18px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     animation: alert-show 0.4s ease forwards;
-    z-index: 1050;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -643,7 +643,4 @@ table[table-permissions] tbody tr td[colspan] b {
 .body .main a.badge:hover {
     opacity: 0.85;
     text-decoration: none;
-}
-.body .main {
-    padding-top: 30px; /* mặc định bạn đang ~96px */
-}
+} 
