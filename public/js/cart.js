@@ -12,6 +12,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
     addButtons.forEach(btn => {
         btn.addEventListener("click", () => {
+            // ✅ KIỂM TRA ĐĂNG NHẬP TRƯỚC
+            if (!isLoggedIn) {
+                Swal.fire({
+                    icon: "warning",
+                    title: "Chưa đăng nhập",
+                    text: "Vui lòng đăng nhập để thêm sản phẩm vào giỏ hàng",
+                    confirmButtonText: "Đăng nhập",
+                    showCancelButton: true,
+                    cancelButtonText: "Hủy"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/login";
+                    }
+                });
+                return;
+            }
 
             const id = btn.dataset.id;
             const title = btn.dataset.title;
@@ -61,11 +77,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     showConfirmButton: false
                 }).then(() => location.reload());
             } else {
-                Swal.fire({
-                    icon: "error",
-                    title: "Lỗi!",
-                    text: data.message
-                });
+                // ✅ Nếu cần đăng nhập, chuyển hướng
+                if (data.requireLogin) {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Chưa đăng nhập",
+                        text: data.message,
+                        confirmButtonText: "Đăng nhập"
+                    }).then(() => {
+                        window.location.href = "/login";
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Lỗi!",
+                        text: data.message
+                    });
+                }
             }
 
         } catch (err) {
@@ -127,13 +155,39 @@ document.addEventListener("DOMContentLoaded", () => {
             }).then(async (result) => {
                 if (!result.isConfirmed) return;
 
-                await fetch("/cart/delete", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ productId: id })
-                });
+                try {
+                    const res = await fetch("/cart/delete", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ productId: id })
+                    });
 
-                location.reload();
+                    const data = await res.json();
+
+                    if (data.success) {
+                        location.reload();
+                    } else {
+                        // ✅ Nếu cần đăng nhập
+                        if (data.requireLogin) {
+                            Swal.fire({
+                                icon: "warning",
+                                title: "Chưa đăng nhập",
+                                text: data.message,
+                                confirmButtonText: "Đăng nhập"
+                            }).then(() => {
+                                window.location.href = "/login";
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Lỗi",
+                                text: data.message
+                            });
+                        }
+                    }
+                } catch (err) {
+                    Swal.fire({ icon: "error", title: "Không thể xóa sản phẩm!" });
+                }
             });
         });
     });
