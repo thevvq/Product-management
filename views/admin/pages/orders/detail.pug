@@ -5,19 +5,16 @@ block main
         .container
             h2.mb-3 Chi tiết đơn hàng ##{order._id}
 
-<<<<<<< HEAD
-            p.text-muted Ngày đặt: #{order.createdAt.toLocaleString()}
-=======
-        p.text-muted 
-            | Ngày đặt: #{order.createdAt.toLocaleDateString('vi-VN')} #{order.createdAt.toLocaleTimeString('vi-VN')}
->>>>>>> origin/home
+            p.text-muted 
+                | Ngày đặt: #{order.createdAt.toLocaleDateString('vi-VN')} #{order.createdAt.toLocaleTimeString('vi-VN')}
 
             h4 Trạng thái hiện tại:
             span.badge(
                 class= order.status === 'cancelled' ? 'bg-secondary' :
-                    order.status === 'completed' ? 'bg-success' :
-                    order.status === 'shipping' ? 'bg-info' :
-                    order.status === 'confirmed' ? 'bg-primary' : 'bg-warning text-dark'
+                       order.status === 'completed' ? 'bg-success' :
+                       order.status === 'shipping' ? 'bg-info' :
+                       order.status === 'confirmed' ? 'bg-primary' :
+                       'bg-warning text-dark'
             ) #{order.statusText}
 
             hr
@@ -45,21 +42,31 @@ block main
                     each item in order.items
                         tr
                             td
-                                img(src=item.thumbnail, width="60", style="border-radius:6px;")
+                                img(
+                                    src=item.thumbnail,
+                                    width="60",
+                                    style="border-radius:6px;object-fit:cover;"
+                                )
                             td #{item.title}
                             td #{item.quantity}
-                            td $#{item.price}
-                            td $#{(item.quantity * item.price).toFixed(2)}
+                            td #{item.price.toLocaleString('vi-VN')} VND
+                            td #{(item.quantity * item.price).toLocaleString('vi-VN')} VND
 
             h3.mt-3
-                | Tổng thanh toán: 
-                span.text-danger $#{order.total.toFixed(2)}
+                | Tổng thanh toán:
+                span.text-danger &nbsp;
+                    | #{order.total.toLocaleString('vi-VN')} VND
 
             hr
+
             if roleUser.permissions.includes('orders_edit')
                 h3 Cập nhật trạng thái đơn
 
-                form(method="POST", action=`/admin/orders/${order._id}/status`, style="max-width:300px;")
+                form(
+                    method="POST",
+                    action=`/admin/orders/${order._id}/status`,
+                    style="max-width:300px;"
+                )
                     select.form-select(name="status")
                         option(value="pending", selected=order.status === 'pending') Đang xử lý
                         option(value="confirmed", selected=order.status === 'confirmed') Đã duyệt
@@ -68,7 +75,5 @@ block main
                         option(value="cancelled", selected=order.status === 'cancelled') Đã hủy
 
                     button.btn.btn-success.mt-3(type="submit") Lưu trạng thái
-
-                a.btn.btn-secondary.mt-3.ms-2(href="/admin/orders") Quay lại danh sách
     else
         +alert-no-permission()
