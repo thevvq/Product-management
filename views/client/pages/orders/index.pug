@@ -34,14 +34,8 @@ block main
                         else if order.status === 'cancelled'
                             span.badge.bg-danger.text-white Đã hủy
 
-<<<<<<< HEAD
                     p.text-muted.mt-1
                         | Ngày đặt: #{order.createdAt.toLocaleString("vi-VN")}
-=======
-                    p.text-muted.mt-1 
-                        | Ngày đặt: #{order.createdAt.toLocaleDateString('vi-VN')} #{order.createdAt.toLocaleTimeString('vi-VN')}
->>>>>>> origin/home
-
                     hr
 
                     h4(style="font-size:18px;margin-top:10px;") Thông tin giao hàng
