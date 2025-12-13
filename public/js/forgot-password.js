@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const response = await fetch('/password/forgot', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
+                        'Content-Type': 'application/json'
                     },
-                    body: `email=${encodeURIComponent(email)}`
+                    body: JSON.stringify({ email })
                 });
                 
                 const data = await response.json();
@@ -26,10 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         confirmButtonText: 'OK'
                     });
                     
-                    // Chuyển hướng sau 1 giây
-                    setTimeout(() => {
-                        window.location.href = `/password/verify-otp?email=${encodeURIComponent(email)}`;
-                    }, 1000);
+                    window.location.href = `/password/verify-otp`;
                 } else {
                     await Swal.fire({
                         icon: 'error',

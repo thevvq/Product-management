@@ -7,15 +7,6 @@ block main
         .auth-box
             h2.title Đăng ký
 
-            if error
-                .alert.alert-danger #{error}
-
-            if errors && errors.length
-                .alert.alert-danger
-                    ul.mb-0
-                        each err in errors
-                            li= err.msg
-
             form(method="POST", action="/register")
                 .form-group
                     label Họ tên
@@ -67,7 +58,7 @@ block main
 
             p.switch-text
                 | Đã có tài khoản?
-                a(href="/login") Đăng nhập →
+                a(href="/login") Đăng nhập
 
     // ===== SCRIPT SHOW / HIDE PASSWORD =====
     script.
